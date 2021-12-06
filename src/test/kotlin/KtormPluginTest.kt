@@ -1,0 +1,48 @@
+import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
+import org.gradle.api.Project
+import org.gradle.api.tasks.SourceSet
+import org.gradle.testfixtures.ProjectBuilder
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+
+class KtormPluginTest {
+    private lateinit var project: Project
+
+    @BeforeEach
+    fun setup() {
+        project = ProjectBuilder.builder().build()
+        project.pluginManager.apply("interop.ktorm")
+    }
+
+    @Test
+    fun `includes interop junit plugin`() {
+        assertNotNull(project.plugins.findPlugin("interop.junit"))
+    }
+
+    @Test
+    fun `includes Ktorm dependencies`() {
+        val mainSourceSet = project.sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+        mainSourceSet.compileClasspath.assertHasJars("ktorm-core-3.4.1", "ktorm-support-mysql-3.4.1")
+    }
+
+    @Test
+    fun `includes TestContainers dependencies`() {
+        val testSourceSet = project.sourceSets.getByName(SourceSet.TEST_SOURCE_SET_NAME)
+        testSourceSet.compileClasspath.assertHasJars("junit-jupiter-1.16.0", "mysql-1.16.0")
+        testSourceSet.runtimeClasspath.assertHasJars("mysql-connector-java-8.0.26")
+    }
+
+    @Test
+    fun `includes Database Rider dependencies`() {
+        val testSourceSet = project.sourceSets.getByName(SourceSet.TEST_SOURCE_SET_NAME)
+        testSourceSet.compileClasspath.assertHasJars("rider-junit5-1.29.0")
+    }
+
+    @Test
+    fun `includes Liquibase dependencies`() {
+        val testSourceSet = project.sourceSets.getByName(SourceSet.TEST_SOURCE_SET_NAME)
+        testSourceSet.compileClasspath.assertHasJars("liquibase-core-4.4.3")
+        testSourceSet.runtimeClasspath.assertHasJars("liquibase-slf4j-4.0.0", "snakeyaml-1.29")
+    }
+}
