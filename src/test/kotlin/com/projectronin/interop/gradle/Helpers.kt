@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import org.gradle.api.file.FileCollection
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue

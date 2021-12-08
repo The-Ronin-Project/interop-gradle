@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.java
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.compileKotlin
@@ -17,7 +19,7 @@ class BasePluginTest {
     @BeforeEach
     fun setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("interop.base")
+        project.pluginManager.apply("com.projectronin.interop.gradle.base")
     }
 
     @Test

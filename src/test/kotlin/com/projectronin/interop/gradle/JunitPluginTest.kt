@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.test
 import org.gradle.api.Project
@@ -15,12 +17,12 @@ class JunitPluginTest {
     @BeforeEach
     fun setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("interop.junit")
+        project.pluginManager.apply("com.projectronin.interop.gradle.junit")
     }
 
     @Test
     fun `includes interop jacoco plugin`() {
-        assertNotNull(project.plugins.findPlugin("interop.jacoco"))
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.jacoco"))
     }
 
     @Test

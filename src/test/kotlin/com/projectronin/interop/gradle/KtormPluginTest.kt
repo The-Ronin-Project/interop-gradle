@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSet
@@ -12,12 +14,12 @@ class KtormPluginTest {
     @BeforeEach
     fun setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("interop.ktorm")
+        project.pluginManager.apply("com.projectronin.interop.gradle.ktorm")
     }
 
     @Test
     fun `includes interop junit plugin`() {
-        assertNotNull(project.plugins.findPlugin("interop.junit"))
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.junit"))
     }
 
     @Test

@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
 import org.gradle.api.Project
 import org.gradle.api.tasks.SourceSet
@@ -12,12 +14,12 @@ class JacksonPluginTest {
     @BeforeEach
     fun setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("interop.jackson")
+        project.pluginManager.apply("com.projectronin.interop.gradle.jackson")
     }
 
     @Test
     fun `includes interop base plugin`() {
-        assertNotNull(project.plugins.findPlugin("interop.base"))
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.base"))
     }
 
     @Test

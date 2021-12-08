@@ -1,3 +1,5 @@
+package com.projectronin.interop.gradle
+
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacoco
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacocoTestReport
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.test
@@ -16,12 +18,12 @@ class JacocoPluginTest {
     @BeforeEach
     fun setup() {
         project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("interop.jacoco")
+        project.pluginManager.apply("com.projectronin.interop.gradle.jacoco")
     }
 
     @Test
     fun `includes interop base plugin`() {
-        assertNotNull(project.plugins.findPlugin("interop.base"))
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.base"))
     }
 
     @Test

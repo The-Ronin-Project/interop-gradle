@@ -1,5 +1,13 @@
+package com.projectronin.interop.gradle
+
+import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.dependencyManagement
+import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.implementation
+import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.testImplementation
+import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.testRuntimeOnly
+import org.gradle.kotlin.dsl.dependencies
+
 plugins {
-    id("interop.junit")
+    id("com.projectronin.interop.gradle.junit")
 }
 
 val ktormVersion = "3.4.1"
