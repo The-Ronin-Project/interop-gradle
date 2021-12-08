@@ -1,7 +1,5 @@
 package com.projectronin.interop.gradle
 
-import org.gradle.kotlin.dsl.kotlin
-
 plugins {
     id("com.projectronin.interop.gradle.base")
 

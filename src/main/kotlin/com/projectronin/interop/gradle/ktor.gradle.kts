@@ -1,8 +1,5 @@
 package com.projectronin.interop.gradle
 
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.exclude
-
 plugins {
     id("com.projectronin.interop.gradle.base")
 }

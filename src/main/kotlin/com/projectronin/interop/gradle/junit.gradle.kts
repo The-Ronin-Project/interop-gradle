@@ -1,7 +1,5 @@
 package com.projectronin.interop.gradle
 
-import org.gradle.kotlin.dsl.dependencies
-
 plugins {
     id("com.projectronin.interop.gradle.jacoco")
 }
