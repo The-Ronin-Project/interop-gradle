@@ -1,8 +1,5 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacoco
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacocoTestReport
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.test
 import org.gradle.kotlin.dsl.jacoco
 
 plugins {

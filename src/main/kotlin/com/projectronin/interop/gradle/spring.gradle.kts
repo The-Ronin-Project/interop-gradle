@@ -1,6 +1,5 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._d02240e388341d2373196f1bcae80b57.dependencyManagement
 import org.gradle.kotlin.dsl.kotlin
 
 plugins {
