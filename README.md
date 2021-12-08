@@ -1,4 +1,4 @@
-[![Lint](https://github.com/projectronin/interop-gradle/actions/workflows/lint.yml/badge.svg)](https://github.com/projectronin/interop-radle/actions/workflows/lint.yml)
+[![Lint](https://github.com/projectronin/interop-gradle/actions/workflows/lint.yml/badge.svg)](https://github.com/projectronin/interop-gradle/actions/workflows/lint.yml)
 
 # interop-gradle
 
