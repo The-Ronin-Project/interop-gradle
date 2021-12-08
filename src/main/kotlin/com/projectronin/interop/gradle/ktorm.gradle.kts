@@ -1,5 +1,7 @@
+package com.projectronin.interop.gradle
+
 plugins {
-    id("interop.junit")
+    id("com.projectronin.interop.gradle.junit")
 }
 
 val ktormVersion = "3.4.1"

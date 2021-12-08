@@ -1,5 +1,7 @@
+package com.projectronin.interop.gradle
+
 plugins {
-    id("interop.jacoco")
+    id("com.projectronin.interop.gradle.jacoco")
 }
 
 dependencies {

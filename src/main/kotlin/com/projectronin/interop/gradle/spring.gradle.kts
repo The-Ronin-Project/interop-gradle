@@ -1,5 +1,7 @@
+package com.projectronin.interop.gradle
+
 plugins {
-    id("interop.base")
+    id("com.projectronin.interop.gradle.base")
 
     // Ensures that Spring annotated classes are open in Kotlin. See https://kotlinlang.org/docs/all-open-plugin.html#spring-support
     kotlin("plugin.spring")
