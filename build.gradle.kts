@@ -48,3 +48,13 @@ tasks {
 tasks.test {
     finalizedBy(tasks.jacocoTestReport)
 }
+
+// ktlint includes the generated-sources, which includes the classes created by Gradle for these plugins
+ktlint {
+    enableExperimentalRules.set(true)
+    filter {
+        // We should be able to just do a wildcard exclude, but it's not working.
+        // This solution comes from https://github.com/JLLeitschuh/ktlint-gradle/issues/222#issuecomment-480758375
+        exclude { projectDir.toURI().relativize(it.file.toURI()).path.contains("/generated-sources/") }
+    }
+}
