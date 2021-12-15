@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/projectronin/interop-gradle/branch/master/graph/badge.svg?token=5KEAfntolA)](https://app.codecov.io/gh/projectronin/interop-gradle/branch/master)
+[![Tests](https://github.com/projectronin/interop-gradle/actions/workflows/test.yml/badge.svg)](https://github.com/projectronin/interop-gradle/actions/workflows/test.yml)
 [![Lint](https://github.com/projectronin/interop-gradle/actions/workflows/lint.yml/badge.svg)](https://github.com/projectronin/interop-gradle/actions/workflows/lint.yml)
 
 # interop-gradle
