@@ -36,8 +36,8 @@ class PublishPluginTest {
 
     @Test
     @SetEnvironmentVariables(
-        SetEnvironmentVariable(key = "GITHUB_ACTOR", value = "test_user"),
-        SetEnvironmentVariable(key = "GITHUB_PUBLISH_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "PACKAGE_USER", value = "test_user"),
+        SetEnvironmentVariable(key = "PACKAGE_TOKEN", value = "token")
     )
     fun `sets maven repository to publishing`() {
         val repositories = project.publishing.repositories
