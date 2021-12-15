@@ -1,5 +1,6 @@
 plugins {
     `kotlin-dsl`
+    `maven-publish`
 
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
@@ -17,6 +18,8 @@ dependencies {
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+    // Allows us to change environment variables
+    testImplementation("org.junit-pioneer:junit-pioneer:1.5.0")
 }
 
 // Setup Jacoco for the tests
@@ -57,4 +60,27 @@ ktlint {
         // This solution comes from https://github.com/JLLeitschuh/ktlint-gradle/issues/222#issuecomment-480758375
         exclude { projectDir.toURI().relativize(it.file.toURI()).path.contains("/generated-sources/") }
     }
+}
+
+// Publishing
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/projectronin/package-repo")
+            credentials {
+                username = System.getenv("PACKAGE_USER")
+                password = System.getenv("PACKAGE_TOKEN")
+            }
+        }
+    }
+    publications {
+        create<MavenPublication>("library") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.register("install") {
+    dependsOn(tasks.publishToMavenLocal)
 }
