@@ -4,7 +4,9 @@ import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacoco
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacocoTestReport
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.test
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.testfixtures.ProjectBuilder
+import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -51,6 +53,12 @@ class JacocoPluginTest {
         val testLogging = project.tasks.test.get().testLogging
         assertTrue(testLogging.showStandardStreams)
         assertTrue(testLogging.showExceptions)
+    }
+
+    @Test
+    fun `excludes HL7 formats`() {
+        val extension = project.tasks.test.get().extensions.getByType<JacocoTaskExtension>()
+        assertEquals(listOf("org/hl7/fhir/r5/formats/**", "org/hl7/fhir/r4/formats/**"), extension.excludes)
     }
 
     @Test

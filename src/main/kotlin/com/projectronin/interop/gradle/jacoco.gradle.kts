@@ -23,6 +23,10 @@ tasks {
     test {
         testLogging.showStandardStreams = true
         testLogging.showExceptions = true
+        configure<JacocoTaskExtension> {
+            // Exclude FHIR parsers as they are too large for instrumentation
+            excludes = listOf("org/hl7/fhir/r5/formats/**", "org/hl7/fhir/r4/formats/**")
+        }
     }
 }
 

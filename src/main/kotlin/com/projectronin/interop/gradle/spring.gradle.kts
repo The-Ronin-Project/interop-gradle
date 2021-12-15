@@ -12,3 +12,7 @@ dependencyManagement {
         mavenBom("org.springframework:spring-framework-bom:5.3.10")
     }
 }
+
+dependencies {
+    implementation("org.springframework:spring-context")
+}

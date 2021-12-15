@@ -28,7 +28,8 @@ class JacksonPluginTest {
         mainSourceSet.compileClasspath.assertHasJars(
             "jackson-core-2.12.3",
             "jackson-annotations-2.12.3",
-            "jackson-databind-2.12.3"
+            "jackson-databind-2.12.3",
+            "jackson-module-kotlin-2.12.3"
         )
     }
 }
