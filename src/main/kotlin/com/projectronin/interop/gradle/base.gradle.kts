@@ -15,6 +15,14 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/projectronin/package-repo")
+        credentials {
+            username = System.getenv("PACKAGE_USER")
+            password = System.getenv("PACKAGE_TOKEN")
+        }
+    }
+    mavenLocal()
 }
 
 tasks.withType<KotlinCompile> {

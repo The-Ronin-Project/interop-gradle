@@ -5,6 +5,7 @@ import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
 import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.compileKotlin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.tasks.SourceSet
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junitpioneer.jupiter.SetEnvironmentVariable
+import java.net.URI
 
 class BasePluginTest {
     private lateinit var project: Project
@@ -45,6 +48,25 @@ class BasePluginTest {
     @Test
     fun `adds maven central repository`() {
         assertTrue(project.repositories.contains(project.repositories.mavenCentral()))
+    }
+
+    @Test
+    @SetEnvironmentVariable.SetEnvironmentVariables(
+        SetEnvironmentVariable(key = "PACKAGE_USER", value = "test_user"),
+        SetEnvironmentVariable(key = "PACKAGE_TOKEN", value = "token")
+    )
+    fun `adds GitHub Packages repository`() {
+        val github =
+            project.repositories.find { it is MavenArtifactRepository && it.url == URI.create("https://maven.pkg.github.com/projectronin/package-repo") } as MavenArtifactRepository
+
+        val credentials = github.credentials
+        assertEquals("test_user", credentials.username)
+        assertEquals("token", credentials.password)
+    }
+
+    @Test
+    fun `adds maven local repository`() {
+        assertTrue(project.repositories.contains(project.repositories.mavenLocal()))
     }
 
     @Test
