@@ -29,6 +29,8 @@ class JacksonPluginTest {
             "jackson-core-2.12.3",
             "jackson-annotations-2.12.3",
             "jackson-databind-2.12.3",
+            "jackson-dataformat-yaml-2.12.3",
+            "jackson-datatype-jsr310-2.12.3",
             "jackson-module-kotlin-2.12.3"
         )
     }
