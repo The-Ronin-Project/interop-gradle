@@ -1,0 +1,4 @@
+# Default owners. This will be used unless a more-specific match is found below.
+* @projectronin/interops
+
+/.github/workflows @projectronin/developer-experience
