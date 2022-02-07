@@ -8,6 +8,9 @@ build/
 !**/src/test/**/build/
 codecov/
 
+# Gradle testing
+userHome
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

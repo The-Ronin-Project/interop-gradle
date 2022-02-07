@@ -1,19 +1,22 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.java
-import gradle.kotlin.dsl.accessors._3081ed7e6bb658519cc365c772992eb9.sourceSets
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.compileKotlin
+import io.mockk.every
+import io.mockk.mockk
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.SourceSet
-import org.gradle.testfixtures.ProjectBuilder
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.SetEnvironmentVariable
+import pl.allegro.tech.build.axion.release.domain.VersionConfig
+import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
+import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 import java.net.URI
 
 class BasePluginTest {
@@ -21,7 +24,7 @@ class BasePluginTest {
 
     @BeforeEach
     fun setup() {
-        project = ProjectBuilder.builder().build()
+        project = getProject()
         project.pluginManager.apply("com.projectronin.interop.gradle.base")
     }
 
@@ -41,8 +44,13 @@ class BasePluginTest {
     }
 
     @Test
+    fun `includes axion release plugin`() {
+        assertNotNull(project.plugins.findPlugin("pl.allegro.tech.build.axion-release"))
+    }
+
+    @Test
     fun `sets java source compatability to 11`() {
-        assertEquals(JavaVersion.VERSION_11, project.java.sourceCompatibility)
+        assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }
 
     @Test
@@ -71,7 +79,7 @@ class BasePluginTest {
 
     @Test
     fun `sets KotlinCompile options`() {
-        val compile = project.tasks.compileKotlin.get()
+        val compile = project.getTask<KotlinCompile>("compileKotlin")
         val options = compile.kotlinOptions
         assertEquals(listOf("-Xjsr305=strict"), options.freeCompilerArgs)
         assertEquals("11", options.jvmTarget)
@@ -79,14 +87,72 @@ class BasePluginTest {
 
     @Test
     fun `includes Kotlin dependencies`() {
-        val mainSourceSet = project.sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+        val mainSourceSet =
+            project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         mainSourceSet.compileClasspath.assertHasJars("kotlin-reflect-1.5.31", "kotlin-stdlib-jdk8-1.5.31")
     }
 
     @Test
     fun `includes logging dependencies`() {
-        val mainSourceSet = project.sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
+        val mainSourceSet =
+            project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         mainSourceSet.compileClasspath.assertHasJars("kotlin-logging-1.12.5", "slf4j-api-1.7.32")
         mainSourceSet.runtimeClasspath.assertHasJars("logback-classic-1.2.6")
+    }
+
+    @Test
+    fun `axion sets initial version to 1_0_0`() {
+        assertEquals(
+            "1.0.0",
+            project.getExtension<VersionConfig>("scmVersion").tag.initialVersion.call(
+                mockk<TagProperties>(),
+                mockk<ScmPosition>()
+            )
+        )
+    }
+
+    @Test
+    fun `axion sets prefix to empty`() {
+        assertEquals("", project.getExtension<VersionConfig>("scmVersion").tag.prefix)
+    }
+
+    @Test
+    fun `axion does not change version for master`() {
+        val versionFromTag = "1.0.0"
+        val position = mockk<ScmPosition> {
+            every { branch } returns "master"
+        }
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        assertEquals("1.0.0", version)
+    }
+
+    @Test
+    fun `axion does not change version for HEAD`() {
+        val versionFromTag = "1.0.0"
+        val position = mockk<ScmPosition> {
+            every { branch } returns "HEAD"
+        }
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        assertEquals("1.0.0", version)
+    }
+
+    @Test
+    fun `axion uses full branch when not following JIRA pattern`() {
+        val versionFromTag = "1.0.0"
+        val position = mockk<ScmPosition> {
+            every { branch } returns "my-branch"
+        }
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        assertEquals("1.0.0-my-branch", version)
+    }
+
+    @Test
+    fun `axion uses shortened branch when following JIRA pattern`() {
+        val versionFromTag = "1.0.0"
+        val position = mockk<ScmPosition> {
+            every { branch } returns "JIRA-7354-my-branch"
+        }
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        assertEquals("1.0.0-JIRA7354", version)
     }
 }

@@ -1,11 +1,10 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._e72a247e0305534ca9bb6c48de480e51.publishToMavenLocal
-import gradle.kotlin.dsl.accessors._e72a247e0305534ca9bb6c48de480e51.publishing
+import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
-import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
@@ -20,7 +19,7 @@ class PublishPluginTest {
 
     @BeforeEach
     fun setup() {
-        project = ProjectBuilder.builder().build()
+        project = getProject()
         project.pluginManager.apply("com.projectronin.interop.gradle.publish")
     }
 
@@ -40,7 +39,7 @@ class PublishPluginTest {
         SetEnvironmentVariable(key = "PACKAGE_TOKEN", value = "token")
     )
     fun `sets maven repository to publishing`() {
-        val repositories = project.publishing.repositories
+        val repositories = project.getExtension<PublishingExtension>("publishing").repositories
         assertEquals(1, repositories.size)
         val github = repositories.getByName("GitHubPackages")
         if (github is MavenArtifactRepository) {
@@ -56,7 +55,7 @@ class PublishPluginTest {
 
     @Test
     fun `creates publication`() {
-        val publications = project.publishing.publications
+        val publications = project.getExtension<PublishingExtension>("publishing").publications
         assertEquals(1, publications.size)
 
         val library = publications.getByName("library")
@@ -72,6 +71,6 @@ class PublishPluginTest {
         val install = project.tasks.getByName("install")
         val dependencies = install.dependsOn
         assertEquals(1, dependencies.size)
-        assertEquals(project.tasks.publishToMavenLocal, dependencies.first())
+        assertEquals(project.getTaskProvider<DefaultTask>("publishToMavenLocal"), dependencies.first())
     }
 }

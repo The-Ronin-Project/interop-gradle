@@ -1,12 +1,10 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacoco
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.jacocoTestReport
-import gradle.kotlin.dsl.accessors._583494fba9f2455342692d57689d5952.test
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.testfixtures.ProjectBuilder
+import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
+import org.gradle.testing.jacoco.tasks.JacocoReport
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -19,7 +17,7 @@ class JacocoPluginTest {
 
     @BeforeEach
     fun setup() {
-        project = ProjectBuilder.builder().build()
+        project = getProject()
         project.pluginManager.apply("com.projectronin.interop.gradle.jacoco")
     }
 
@@ -35,14 +33,14 @@ class JacocoPluginTest {
 
     @Test
     fun `sets up jacoco`() {
-        val jacoco = project.jacoco
+        val jacoco = project.getExtension<JacocoPluginExtension>("jacoco")
         assertEquals("0.8.7", jacoco.toolVersion)
         assertEquals("codecov", jacoco.reportsDirectory.asFile.get().name)
     }
 
     @Test
     fun `sets up jacoco reports`() {
-        val reports = project.tasks.jacocoTestReport.get().reports
+        val reports = project.getTask<JacocoReport>("jacocoTestReport").reports
         assertTrue(reports.xml.required.get())
         assertFalse(reports.csv.required.get())
         assertTrue(reports.html.required.get())
@@ -50,22 +48,22 @@ class JacocoPluginTest {
 
     @Test
     fun `enables test logging`() {
-        val testLogging = project.tasks.test.get().testLogging
+        val testLogging = project.test().testLogging
         assertTrue(testLogging.showStandardStreams)
         assertTrue(testLogging.showExceptions)
     }
 
     @Test
     fun `excludes HL7 formats`() {
-        val extension = project.tasks.test.get().extensions.getByType<JacocoTaskExtension>()
+        val extension = project.test().extensions.getByType<JacocoTaskExtension>()
         assertEquals(listOf("org/hl7/fhir/r5/formats/**", "org/hl7/fhir/r4/formats/**"), extension.excludes)
     }
 
     @Test
     fun `runs jacoco after tests`() {
-        val test = project.tasks.test.get()
+        val test = project.test()
         assertTrue(
-            test.finalizedBy.getDependencies(project.tasks.jacocoTestReport.get()).size == 1
+            test.finalizedBy.getDependencies(project.getTask<JacocoReport>("jacocoTestReport")).size == 1
         )
     }
 }

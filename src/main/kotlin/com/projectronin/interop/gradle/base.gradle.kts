@@ -1,6 +1,9 @@
 package com.projectronin.interop.gradle
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
+import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
+import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
     kotlin("jvm")
@@ -9,12 +12,12 @@ plugins {
     id("io.spring.dependency-management")
 
     id("org.jlleitschuh.gradle.ktlint")
+    id("pl.allegro.tech.build.axion-release")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-    mavenCentral()
     maven {
         url = uri("https://maven.pkg.github.com/projectronin/package-repo")
         credentials {
@@ -22,6 +25,7 @@ repositories {
             password = System.getenv("PACKAGE_TOKEN")
         }
     }
+    mavenCentral()
     mavenLocal()
 }
 
@@ -31,6 +35,32 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
     }
 }
+
+// Versioning/release
+scmVersion {
+    tag(
+        closureOf<TagNameSerializationConfig> {
+            initialVersion = KotlinClosure2<TagProperties, ScmPosition, String>({ _, _ -> "1.0.0" })
+            prefix = ""
+        }
+    )
+    versionCreator = KotlinClosure2<String, ScmPosition, String>({ versionFromTag, position ->
+        if (position.branch != "master" && position.branch != "HEAD") {
+            val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
+            val match = jiraBranchRegex.matchEntire(position.branch)
+            val branchExtension = match?.let {
+                val (project, number, _) = it.destructured
+                "$project$number"
+            } ?: position.branch
+
+            "$versionFromTag-$branchExtension"
+        } else {
+            versionFromTag
+        }
+    })
+}
+
+project.version = scmVersion.version
 
 dependencies {
     // Kotlin
