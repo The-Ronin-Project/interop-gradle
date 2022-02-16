@@ -49,6 +49,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-allopen:1.5.31")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
     implementation("pl.allegro.tech.build:axion-release-plugin:1.13.6")
+    implementation("org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:4.0.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
     // Allows us to change environment variables
