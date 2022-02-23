@@ -29,23 +29,55 @@ class PublishPluginTest {
     }
 
     @Test
-    fun `includes spring dependency management plugin`() {
-        assertNotNull(project.plugins.findPlugin("io.spring.dependency-management"))
+    fun `includes interop base plugin`() {
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.base"))
     }
 
     @Test
     @SetEnvironmentVariables(
-        SetEnvironmentVariable(key = "PACKAGE_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "PACKAGE_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
     )
-    fun `sets maven repository to publishing`() {
-        val repositories = project.getExtension<PublishingExtension>("publishing").repositories
-        assertEquals(1, repositories.size)
-        val github = repositories.getByName("GitHubPackages")
-        if (github is MavenArtifactRepository) {
-            assertEquals(URI("https://maven.pkg.github.com/projectronin/package-repo"), github.url)
+    fun `sets maven repository to publishing for snapshot`() {
+        val snapshotProject = getProject()
+        // We apply this first so that it sets the version so that we can override it below
+        snapshotProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+        snapshotProject.version = "1.0.0-SNAPSHOT"
+        snapshotProject.pluginManager.apply("com.projectronin.interop.gradle.publish")
 
-            val credentials = github.credentials
+        val repositories = snapshotProject.getExtension<PublishingExtension>("publishing").repositories
+        assertEquals(1, repositories.size)
+        val nexus = repositories.getByName("nexus")
+        if (nexus is MavenArtifactRepository) {
+            assertEquals(URI("https://repo.devops.projectronin.io/repository/maven-snapshots/"), nexus.url)
+
+            val credentials = nexus.credentials
+            assertEquals("test_user", credentials.username)
+            assertEquals("token", credentials.password)
+        } else {
+            fail { "Non Maven artifact repository" }
+        }
+    }
+
+    @Test
+    @SetEnvironmentVariables(
+        SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
+    )
+    fun `sets maven repository to publishing for non-snapshot`() {
+        val nonSnapshotProject = getProject()
+        // We apply this first so that it sets the version so that we can override it below
+        nonSnapshotProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+        nonSnapshotProject.version = "1.0.0"
+        nonSnapshotProject.pluginManager.apply("com.projectronin.interop.gradle.publish")
+
+        val repositories = nonSnapshotProject.getExtension<PublishingExtension>("publishing").repositories
+        assertEquals(1, repositories.size)
+        val nexus = repositories.getByName("nexus")
+        if (nexus is MavenArtifactRepository) {
+            assertEquals(URI("https://repo.devops.projectronin.io/repository/maven-releases/"), nexus.url)
+
+            val credentials = nexus.credentials
             assertEquals("test_user", credentials.username)
             assertEquals("token", credentials.password)
         } else {

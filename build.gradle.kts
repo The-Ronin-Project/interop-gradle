@@ -5,7 +5,6 @@ import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 plugins {
     `kotlin-dsl`
     `maven-publish`
-
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("pl.allegro.tech.build.axion-release") version "1.13.6"
@@ -39,7 +38,12 @@ scmVersion {
 project.version = scmVersion.version
 
 repositories {
-    mavenCentral()
+    maven {
+        url = uri("https://repo.devops.projectronin.io/repository/maven-public/")
+        mavenContent {
+            releasesOnly()
+        }
+    }
     maven(url = "https://plugins.gradle.org/m2/")
 }
 
@@ -103,11 +107,15 @@ ktlint {
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/projectronin/package-repo")
+            name = "nexus"
             credentials {
-                username = System.getenv("PACKAGE_USER")
-                password = System.getenv("PACKAGE_TOKEN")
+                username = System.getenv("NEXUS_USER")
+                password = System.getenv("NEXUS_TOKEN")
+            }
+            url = if (project.version.toString().endsWith("SNAPSHOT")) {
+                uri("https://repo.devops.projectronin.io/repository/maven-snapshots/")
+            } else {
+                uri("https://repo.devops.projectronin.io/repository/maven-releases/")
             }
         }
     }

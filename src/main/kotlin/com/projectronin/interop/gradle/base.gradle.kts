@@ -8,9 +8,6 @@ import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 plugins {
     kotlin("jvm")
 
-    // Adds Maven-like Dependency Management capabilities. See https://docs.spring.io/dependency-management-plugin/docs/current/reference/html/
-    id("io.spring.dependency-management")
-
     id("org.jlleitschuh.gradle.ktlint")
     id("pl.allegro.tech.build.axion-release")
 }
@@ -25,7 +22,29 @@ repositories {
             password = System.getenv("PACKAGE_TOKEN")
         }
     }
-    mavenCentral()
+    maven {
+        url = uri("https://repo.devops.projectronin.io/repository/maven-releases/")
+        mavenContent {
+            releasesOnly()
+        }
+    }
+
+    // Only include the snapshot repo if this is not a release task
+    if (System.getProperty("ronin.release", "false") == "false") {
+        maven {
+            url = uri("https://repo.devops.projectronin.io/repository/maven-snapshots/")
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+    }
+
+    maven {
+        url = uri("https://repo.devops.projectronin.io/repository/maven-public/")
+        mavenContent {
+            releasesOnly()
+        }
+    }
     mavenLocal()
 }
 

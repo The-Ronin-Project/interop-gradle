@@ -7,12 +7,7 @@ plugins {
     kotlin("plugin.spring")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework:spring-framework-bom:5.3.10")
-    }
-}
-
 dependencies {
+    implementation(platform("org.springframework:spring-framework-bom:5.3.10"))
     implementation("org.springframework:spring-context")
 }

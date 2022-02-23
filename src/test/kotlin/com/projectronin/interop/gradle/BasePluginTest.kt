@@ -10,6 +10,7 @@ import org.gradle.api.tasks.SourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,11 +35,6 @@ class BasePluginTest {
     }
 
     @Test
-    fun `includes spring dependency management plugin`() {
-        assertNotNull(project.plugins.findPlugin("io.spring.dependency-management"))
-    }
-
-    @Test
     fun `includes ktlint plugin`() {
         assertNotNull(project.plugins.findPlugin("org.jlleitschuh.gradle.ktlint"))
     }
@@ -53,9 +49,65 @@ class BasePluginTest {
         assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }
 
+    private fun getMavenRepository(project: Project, url: String): MavenArtifactRepository? =
+        project.repositories.find { it is MavenArtifactRepository && it.url == URI.create(url) } as? MavenArtifactRepository
+
     @Test
-    fun `adds maven central repository`() {
-        assertTrue(project.repositories.contains(project.repositories.mavenCentral()))
+    fun `adds maven central mirror repository`() {
+        val maven = getMavenRepository(project, "https://repo.devops.projectronin.io/repository/maven-public/")
+
+        val credentials = maven!!.credentials
+        assertNull(credentials.username)
+        assertNull(credentials.password)
+    }
+
+    @Test
+    fun `adds Ronin release repository`() {
+        val maven = getMavenRepository(project, "https://repo.devops.projectronin.io/repository/maven-releases/")
+
+        val credentials = maven!!.credentials
+        assertNull(credentials.username)
+        assertNull(credentials.password)
+    }
+
+    @Test
+    fun `adds Ronin snapshot repository when no release is set`() {
+        System.getProperties().remove("ronin.release")
+        val noReleaseProject = getProject()
+        noReleaseProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+
+        val maven =
+            getMavenRepository(noReleaseProject, "https://repo.devops.projectronin.io/repository/maven-snapshots/")
+
+        val credentials = maven!!.credentials
+        assertNull(credentials.username)
+        assertNull(credentials.password)
+    }
+
+    @Test
+    fun `adds Ronin snapshot repository when release is set to false`() {
+        System.setProperty("ronin.release", "false")
+        val falseReleaseProject = getProject()
+        falseReleaseProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+
+        val maven =
+            getMavenRepository(falseReleaseProject, "https://repo.devops.projectronin.io/repository/maven-snapshots/")
+
+        val credentials = maven!!.credentials
+        assertNull(credentials.username)
+        assertNull(credentials.password)
+    }
+
+    @Test
+    fun `does not add Ronin snapshot repository when release is set to true`() {
+        System.setProperty("ronin.release", "true")
+        val trueReleaseProject = getProject()
+        trueReleaseProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+
+        val maven =
+            getMavenRepository(trueReleaseProject, "https://repo.devops.projectronin.io/repository/maven-snapshots/")
+
+        assertNull(maven)
     }
 
     @Test
