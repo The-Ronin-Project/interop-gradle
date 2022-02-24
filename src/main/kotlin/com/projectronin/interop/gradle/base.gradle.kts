@@ -12,7 +12,13 @@ plugins {
     id("pl.allegro.tech.build.axion-release")
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+
+    // Generate sources and javadoc JARs. These will automatically be published in publishing is active.
+    withSourcesJar()
+    withJavadocJar()
+}
 
 repositories {
     maven {
