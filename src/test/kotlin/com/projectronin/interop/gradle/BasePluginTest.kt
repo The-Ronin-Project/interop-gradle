@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junitpioneer.jupiter.SetEnvironmentVariable
 import pl.allegro.tech.build.axion.release.domain.VersionConfig
 import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
 import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
@@ -108,20 +107,6 @@ class BasePluginTest {
             getMavenRepository(trueReleaseProject, "https://repo.devops.projectronin.io/repository/maven-snapshots/")
 
         assertNull(maven)
-    }
-
-    @Test
-    @SetEnvironmentVariable.SetEnvironmentVariables(
-        SetEnvironmentVariable(key = "PACKAGE_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "PACKAGE_TOKEN", value = "token")
-    )
-    fun `adds GitHub Packages repository`() {
-        val github =
-            project.repositories.find { it is MavenArtifactRepository && it.url == URI.create("https://maven.pkg.github.com/projectronin/package-repo") } as MavenArtifactRepository
-
-        val credentials = github.credentials
-        assertEquals("test_user", credentials.username)
-        assertEquals("token", credentials.password)
     }
 
     @Test
