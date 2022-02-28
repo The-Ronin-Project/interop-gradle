@@ -119,11 +119,6 @@ publishing {
             }
         }
     }
-    publications {
-        create<MavenPublication>("library") {
-            from(components["java"])
-        }
-    }
 }
 
 tasks.register("install") {
