@@ -1,13 +1,28 @@
+import org.gradle.kotlin.dsl.support.serviceOf
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
 import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
+    kotlin("jvm") version "1.6.10"
     `kotlin-dsl`
     `maven-publish`
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("pl.allegro.tech.build.axion-release") version "1.13.6"
+}
+
+// Java/Kotlin versioning
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "17"
+    }
 }
 
 // Versioning/release
@@ -47,10 +62,12 @@ repositories {
     maven(url = "https://plugins.gradle.org/m2/")
 }
 
+val kotlinVersion = "1.6.10"
+
 dependencies {
     implementation("io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-    implementation("org.jetbrains.kotlin:kotlin-allopen:1.5.31")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion")
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.0")
     implementation("pl.allegro.tech.build:axion-release-plugin:1.13.6")
     implementation("org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:4.0.0")
@@ -61,6 +78,11 @@ dependencies {
     // For axion-release
     testImplementation("org.apache.sshd:sshd-core:2.8.0")
     testImplementation("io.mockk:mockk:1.12.0")
+
+    // See https://github.com/gradle/gradle/issues/16774#issuecomment-853407822
+    testRuntimeOnly(
+        files(serviceOf<org.gradle.api.internal.classpath.ModuleRegistry>().getModule("gradle-tooling-api-builders").classpath.asFiles.first())
+    )
 }
 
 // Setup Jacoco for the tests

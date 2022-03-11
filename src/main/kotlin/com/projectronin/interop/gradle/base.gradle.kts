@@ -13,7 +13,7 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
 
     // Generate sources and javadoc JARs. These will automatically be published in publishing is active.
     withSourcesJar()
@@ -50,7 +50,7 @@ repositories {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -80,10 +80,12 @@ scmVersion {
 
 project.version = scmVersion.version
 
+val kotlinVersion = "1.6.10"
+
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.31")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:1.12.5")
