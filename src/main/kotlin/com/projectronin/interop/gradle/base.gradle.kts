@@ -13,7 +13,7 @@ plugins {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
 
     // Generate sources and javadoc JARs. These will automatically be published in publishing is active.
     withSourcesJar()
@@ -50,7 +50,7 @@ repositories {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
+        jvmTarget = "11"
     }
 }
 
