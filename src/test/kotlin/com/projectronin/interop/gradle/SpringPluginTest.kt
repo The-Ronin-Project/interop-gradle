@@ -28,6 +28,6 @@ class SpringPluginTest {
     @Test
     fun `includes spring dependencies`() {
         val mainSourceSet = project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
-        mainSourceSet.compileClasspath.assertHasJars("spring-context-5.3.10")
+        mainSourceSet.compileClasspath.assertHasJars("spring-context")
     }
 }

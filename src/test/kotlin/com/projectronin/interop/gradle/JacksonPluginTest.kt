@@ -24,12 +24,12 @@ class JacksonPluginTest {
     fun `includes Jackson dependencies`() {
         val mainSourceSet = project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         mainSourceSet.compileClasspath.assertHasJars(
-            "jackson-core-2.12.3",
-            "jackson-annotations-2.12.3",
-            "jackson-databind-2.12.3",
-            "jackson-dataformat-yaml-2.12.3",
-            "jackson-datatype-jsr310-2.12.3",
-            "jackson-module-kotlin-2.12.3"
+            "jackson-core",
+            "jackson-annotations",
+            "jackson-databind",
+            "jackson-dataformat-yaml",
+            "jackson-datatype-jsr310",
+            "jackson-module-kotlin"
         )
     }
 }

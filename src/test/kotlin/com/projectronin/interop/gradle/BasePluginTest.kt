@@ -44,6 +44,11 @@ class BasePluginTest {
     }
 
     @Test
+    fun `includes releases hub plugin`() {
+        assertNotNull(project.plugins.findPlugin("com.dipien.releaseshub.gradle.plugin"))
+    }
+
+    @Test
     fun `sets java source compatability to 17`() {
         assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }
@@ -126,10 +131,9 @@ class BasePluginTest {
     fun `includes Kotlin dependencies`() {
         val mainSourceSet =
             project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
-        val kotlinVersion = "1.6.10"
         mainSourceSet.compileClasspath.assertHasJars(
-            "kotlin-reflect-$kotlinVersion",
-            "kotlin-stdlib-jdk8-$kotlinVersion"
+            "kotlin-reflect",
+            "kotlin-stdlib-jdk8"
         )
     }
 
@@ -137,8 +141,8 @@ class BasePluginTest {
     fun `includes logging dependencies`() {
         val mainSourceSet =
             project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
-        mainSourceSet.compileClasspath.assertHasJars("kotlin-logging-1.12.5", "slf4j-api-1.7.32")
-        mainSourceSet.runtimeClasspath.assertHasJars("logback-classic-1.2.6")
+        mainSourceSet.compileClasspath.assertHasJars("kotlin-logging-jvm", "slf4j-api")
+        mainSourceSet.runtimeClasspath.assertHasJars("logback-classic")
     }
 
     @Test
@@ -162,6 +166,16 @@ class BasePluginTest {
         val versionFromTag = "1.0.0"
         val position = mockk<ScmPosition> {
             every { branch } returns "master"
+        }
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        assertEquals("1.0.0", version)
+    }
+
+    @Test
+    fun `axion does not change version for main`() {
+        val versionFromTag = "1.0.0"
+        val position = mockk<ScmPosition> {
+            every { branch } returns "main"
         }
         val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
         assertEquals("1.0.0", version)

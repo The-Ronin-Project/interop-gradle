@@ -25,14 +25,14 @@ class KtorPluginTest {
         val mainSourceSet = project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         // These names are slightly different because of how ktor resolves its dependencies to system specific types
         mainSourceSet.compileClasspath.assertHasJars(
-            "ktor-client-cio-jvm-1.6.3",
-            "ktor-client-core-jvm-1.6.3",
-            "ktor-client-jackson-jvm-1.6.3",
-            "ktor-auth-jwt-jvm-1.6.3"
+            "ktor-client-cio-jvm",
+            "ktor-client-core-jvm",
+            "ktor-client-jackson-jvm",
+            "ktor-auth-jwt-jvm"
         )
 
         val testSourceSet = project.sourceSets().getByName(SourceSet.TEST_SOURCE_SET_NAME)
-        testSourceSet.compileClasspath.assertHasJars("ktor-client-mock-jvm-1.6.3")
+        testSourceSet.compileClasspath.assertHasJars("ktor-client-mock-jvm")
     }
 
     @Test

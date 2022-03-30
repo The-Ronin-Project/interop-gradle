@@ -25,7 +25,7 @@ class JunitPluginTest {
     @Test
     fun `includes JUnit Jupiter dependencies`() {
         val testSourceSet = project.sourceSets().getByName(SourceSet.TEST_SOURCE_SET_NAME)
-        testSourceSet.compileClasspath.assertHasJars("junit-jupiter-5.7.0")
+        testSourceSet.compileClasspath.assertHasJars("junit-jupiter")
     }
 
     @Test

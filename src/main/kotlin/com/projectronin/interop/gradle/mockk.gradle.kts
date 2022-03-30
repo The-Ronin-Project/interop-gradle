@@ -6,5 +6,5 @@ plugins {
 
 dependencies {
     // Mockk
-    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("io.mockk:mockk:1.12.3")
 }

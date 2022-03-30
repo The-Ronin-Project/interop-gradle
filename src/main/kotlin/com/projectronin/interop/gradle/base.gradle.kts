@@ -10,6 +10,7 @@ plugins {
 
     id("org.jlleitschuh.gradle.ktlint")
     id("pl.allegro.tech.build.axion-release")
+    id("com.dipien.releaseshub.gradle.plugin")
 }
 
 java {
@@ -63,7 +64,8 @@ scmVersion {
         }
     )
     versionCreator = KotlinClosure2<String, ScmPosition, String>({ versionFromTag, position ->
-        if (position.branch != "master" && position.branch != "HEAD") {
+        val supportedHeads = setOf("HEAD", "master", "main")
+        if (!supportedHeads.contains(position.branch)) {
             val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
             val match = jiraBranchRegex.matchEntire(position.branch)
             val branchExtension = match?.let {
@@ -80,15 +82,13 @@ scmVersion {
 
 project.version = scmVersion.version
 
-val kotlinVersion = "1.6.10"
-
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.10")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10")
 
     // Logging
-    implementation("io.github.microutils:kotlin-logging:1.12.5")
-    implementation("org.slf4j:slf4j-api:1.7.32")
-    runtimeOnly("ch.qos.logback:logback-classic:1.2.6")
+    implementation("io.github.microutils:kotlin-logging:2.1.21")
+    implementation("org.slf4j:slf4j-api:1.7.36")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.11")
 }

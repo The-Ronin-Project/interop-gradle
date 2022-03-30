@@ -15,7 +15,8 @@ import java.io.File
 fun FileCollection.assertHasJars(vararg jarNames: String) {
     val allFiles = this.files.map { it.name }
     for (jarName in jarNames) {
-        assertTrue(allFiles.contains("$jarName.jar")) { "No JAR found for $jarName" }
+        val regex = "$jarName-[0-9]+([.-]\\w+)*\\.jar".toRegex()
+        assertTrue(allFiles.any { regex.matches(it) }) { "No JAR found for $jarName" }
     }
 }
 

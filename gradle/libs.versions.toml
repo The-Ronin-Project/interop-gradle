@@ -1,0 +1,14 @@
+[libraries]
+axion-release-plugin = "pl.allegro.tech.build:axion-release-plugin:1.13.6"
+gradle-testsets-plugin = "org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:4.0.0"
+junit-jupiter = "org.junit.jupiter:junit-jupiter:5.8.2"
+junit-pioneer = "org.junit-pioneer:junit-pioneer:1.6.2"
+kotlin-gradle-plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+kotlin-allopen = "org.jetbrains.kotlin:kotlin-allopen:1.6.10"
+ktlint-gradle = "org.jlleitschuh.gradle:ktlint-gradle:10.2.1"
+releases-hub-gradle-plugin = "com.dipien:releases-hub-gradle-plugin:3.1.0"
+sshd-core = "org.apache.sshd:sshd-core:2.8.0"
+mockk = "io.mockk:mockk:1.12.2"
+
+[bundles]
+kotlin = ["kotlin-gradle-plugin", "kotlin-allopen"]

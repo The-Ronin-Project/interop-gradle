@@ -23,6 +23,6 @@ class MockkPluginTest {
     @Test
     fun `includes mockk dependencies`() {
         val testSourceSet = project.sourceSets().getByName(SourceSet.TEST_SOURCE_SET_NAME)
-        testSourceSet.compileClasspath.assertHasJars("mockk-1.12.0")
+        testSourceSet.compileClasspath.assertHasJars("mockk")
     }
 }
