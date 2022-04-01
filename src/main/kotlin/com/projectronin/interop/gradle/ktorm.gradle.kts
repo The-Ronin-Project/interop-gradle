@@ -21,6 +21,6 @@ dependencies {
 
     // Liquibase
     testImplementation("org.liquibase:liquibase-core:4.9.1")
-    testRuntimeOnly("com.mattbertolini:liquibase-slf4j:4.0.0")
+    testRuntimeOnly("com.mattbertolini:liquibase-slf4j:4.1.0")
     testRuntimeOnly("org.yaml:snakeyaml:1.30")
 }
