@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("org.testcontainers:testcontainers-bom:1.17.0"))
+    implementation(platform("org.testcontainers:testcontainers-bom:1.17.1"))
 
     // Ktorm
     implementation("org.ktorm:ktorm-core:3.4.1")
