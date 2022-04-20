@@ -84,8 +84,8 @@ project.version = scmVersion.version
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.20")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:2.1.21")
