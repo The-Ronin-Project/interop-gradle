@@ -14,7 +14,7 @@ dependencies {
     // Test Containers
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mysql")
-    testRuntimeOnly("mysql:mysql-connector-java:8.0.28")
+    testRuntimeOnly("mysql:mysql-connector-java:8.0.29")
 
     // Database Rider
     testImplementation("com.github.database-rider:rider-junit5:1.32.3")
