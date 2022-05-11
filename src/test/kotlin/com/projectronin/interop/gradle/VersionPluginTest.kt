@@ -21,6 +21,11 @@ class VersionPluginTest {
     }
 
     @Test
+    fun `includes interop base plugin`() {
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.base"))
+    }
+
+    @Test
     fun `includes axion release plugin`() {
         assertNotNull(project.plugins.findPlugin("pl.allegro.tech.build.axion-release"))
     }

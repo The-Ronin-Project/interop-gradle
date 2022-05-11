@@ -5,6 +5,7 @@ import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
 import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
+    id("com.projectronin.interop.gradle.base")
     id("pl.allegro.tech.build.axion-release")
 }
 
