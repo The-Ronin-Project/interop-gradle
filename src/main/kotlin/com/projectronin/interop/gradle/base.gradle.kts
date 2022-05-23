@@ -57,7 +57,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
 
     // Logging
-    implementation("io.github.microutils:kotlin-logging:2.1.21")
+    implementation("io.github.microutils:kotlin-logging:2.1.23")
     implementation("org.slf4j:slf4j-api:1.7.36")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.11")
 }
