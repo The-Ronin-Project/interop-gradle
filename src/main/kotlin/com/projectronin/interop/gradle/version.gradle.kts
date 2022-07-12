@@ -1,8 +1,6 @@
 package com.projectronin.interop.gradle
 
-import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
-import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
     id("com.projectronin.interop.gradle.base")
@@ -11,13 +9,11 @@ plugins {
 
 rootProject.apply {
     scmVersion {
-        tag(
-            closureOf<TagNameSerializationConfig> {
-                initialVersion = KotlinClosure2<TagProperties, ScmPosition, String>({ _, _ -> "1.0.0" })
-                prefix = ""
-            }
-        )
-        versionCreator = KotlinClosure2<String, ScmPosition, String>({ versionFromTag, position ->
+        tag {
+            initialVersion = TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" }
+            prefix = ""
+        }
+        versionCreator { versionFromTag, position ->
             val supportedHeads = setOf("HEAD", "master", "main")
             if (!supportedHeads.contains(position.branch)) {
                 val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
@@ -31,7 +27,7 @@ rootProject.apply {
             } else {
                 versionFromTag
             }
-        })
+        }
     }
 }
 

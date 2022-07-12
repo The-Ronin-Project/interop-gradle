@@ -1,8 +1,6 @@
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import pl.allegro.tech.build.axion.release.domain.TagNameSerializationConfig
 import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
-import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
     kotlin("jvm")
@@ -28,13 +26,11 @@ tasks.withType<KotlinCompile> {
 
 // Versioning/release
 scmVersion {
-    tag(
-        closureOf<TagNameSerializationConfig> {
-            initialVersion = KotlinClosure2<TagProperties, ScmPosition, String>({ _, _ -> "1.0.0" })
-            prefix = ""
-        }
-    )
-    versionCreator = KotlinClosure2<String, ScmPosition, String>({ versionFromTag, position ->
+    tag {
+        initialVersion = TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" }
+        prefix = ""
+    }
+    versionCreator { versionFromTag, position ->
         if (position.branch != "master" && position.branch != "HEAD") {
             val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
             val match = jiraBranchRegex.matchEntire(position.branch)
@@ -48,7 +44,7 @@ scmVersion {
         } else {
             versionFromTag
         }
-    })
+    }
 }
 
 project.version = scmVersion.version

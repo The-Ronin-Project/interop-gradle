@@ -34,7 +34,7 @@ class VersionPluginTest {
     fun `axion sets initial version to 1_0_0`() {
         assertEquals(
             "1.0.0",
-            project.getExtension<VersionConfig>("scmVersion").tag.initialVersion.call(
+            project.getExtension<VersionConfig>("scmVersion").tag.initialVersion.apply(
                 mockk<TagProperties>(),
                 mockk<ScmPosition>()
             )
@@ -52,7 +52,7 @@ class VersionPluginTest {
         val position = mockk<ScmPosition> {
             every { branch } returns "master"
         }
-        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.apply(versionFromTag, position)
         assertEquals("1.0.0", version)
     }
 
@@ -62,7 +62,7 @@ class VersionPluginTest {
         val position = mockk<ScmPosition> {
             every { branch } returns "main"
         }
-        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.apply(versionFromTag, position)
         assertEquals("1.0.0", version)
     }
 
@@ -72,7 +72,7 @@ class VersionPluginTest {
         val position = mockk<ScmPosition> {
             every { branch } returns "HEAD"
         }
-        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.apply(versionFromTag, position)
         assertEquals("1.0.0", version)
     }
 
@@ -82,7 +82,7 @@ class VersionPluginTest {
         val position = mockk<ScmPosition> {
             every { branch } returns "my-branch"
         }
-        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.apply(versionFromTag, position)
         assertEquals("1.0.0-my-branch", version)
     }
 
@@ -92,7 +92,7 @@ class VersionPluginTest {
         val position = mockk<ScmPosition> {
             every { branch } returns "JIRA-7354-my-branch"
         }
-        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.call(versionFromTag, position)
+        val version = project.getExtension<VersionConfig>("scmVersion").versionCreator.apply(versionFromTag, position)
         assertEquals("1.0.0-JIRA7354", version)
     }
 }
