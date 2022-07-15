@@ -82,6 +82,8 @@ dependencies {
 // Setup Jacoco for the tests
 tasks.withType<Test> {
     useJUnitPlatform()
+
+    jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
 }
 
 jacoco {
