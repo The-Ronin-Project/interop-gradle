@@ -10,8 +10,8 @@ plugins {
 rootProject.apply {
     scmVersion {
         tag {
-            initialVersion = TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" }
-            prefix = ""
+            initialVersion(TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" })
+            prefix.set("")
         }
         versionCreator { versionFromTag, position ->
             val supportedHeads = setOf("HEAD", "master", "main")

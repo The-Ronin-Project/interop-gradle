@@ -27,8 +27,8 @@ tasks.withType<KotlinCompile> {
 // Versioning/release
 scmVersion {
     tag {
-        initialVersion = TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" }
-        prefix = ""
+        initialVersion(TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" })
+        prefix.set("")
     }
     versionCreator { versionFromTag, position ->
         if (position.branch != "master" && position.branch != "HEAD") {
