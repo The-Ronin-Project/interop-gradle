@@ -34,7 +34,7 @@ class JacocoPluginTest {
     @Test
     fun `sets up jacoco`() {
         val jacoco = project.getExtension<JacocoPluginExtension>("jacoco")
-        assertEquals("0.8.7", jacoco.toolVersion)
+        assertEquals("0.8.8", jacoco.toolVersion)
         assertEquals("codecov", jacoco.reportsDirectory.asFile.get().name)
     }
 
