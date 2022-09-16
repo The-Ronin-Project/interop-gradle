@@ -8,7 +8,7 @@ kotlin-allopen = "org.jetbrains.kotlin:kotlin-allopen:1.7.10"
 ktlint-gradle = "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
 releases-hub-gradle-plugin = "com.dipien:releases-hub-gradle-plugin:3.1.0"
 sshd-core = "org.apache.sshd:sshd-core:2.9.1"
-mockk = "io.mockk:mockk:1.12.7"
+mockk = "io.mockk:mockk:1.12.8"
 
 [bundles]
 kotlin = ["kotlin-gradle-plugin", "kotlin-allopen"]
