@@ -78,6 +78,6 @@ dependencies {
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:2.1.23")
-    implementation("org.slf4j:slf4j-api:2.0.0")
+    implementation("org.slf4j:slf4j-api:2.0.1")
     runtimeOnly("ch.qos.logback:logback-classic:1.4.1")
 }
