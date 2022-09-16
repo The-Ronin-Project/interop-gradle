@@ -8,6 +8,6 @@ plugins {
 }
 
 dependencies {
-    implementation(platform("org.springframework:spring-framework-bom:5.3.22"))
+    implementation(platform("org.springframework:spring-framework-bom:5.3.23"))
     implementation("org.springframework:spring-context")
 }
