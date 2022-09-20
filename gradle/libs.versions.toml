@@ -1,5 +1,5 @@
 [libraries]
-axion-release-plugin = "pl.allegro.tech.build:axion-release-plugin:1.14.0"
+axion-release-plugin = "pl.allegro.tech.build:axion-release-plugin:1.14.1"
 gradle-testsets-plugin = "org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:4.0.0"
 junit-jupiter = "org.junit.jupiter:junit-jupiter:5.9.0"
 junit-pioneer = "org.junit-pioneer:junit-pioneer:1.7.1"
