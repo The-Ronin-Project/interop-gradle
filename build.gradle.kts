@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.axion.release.plugin)
     implementation(libs.gradle.testsets.plugin)
     implementation(libs.releases.hub.gradle.plugin)
+    implementation(libs.spring.boot.gradle.plugin)
 
     testImplementation(libs.junit.jupiter)
     // Allows us to change environment variables

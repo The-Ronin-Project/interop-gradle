@@ -3,6 +3,9 @@ package com.projectronin.interop.gradle
 import org.gradle.api.Project
 import org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestFramework
 import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -33,5 +36,25 @@ class JunitPluginTest {
         assertTrue(
             project.test().testFramework is JUnitPlatformTestFramework
         )
+    }
+
+    @Test
+    fun `sets test logging events`() {
+        val events = project.test().testLogging.events
+        assertEquals(
+            setOf(
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.FAILED,
+                TestLogEvent.STANDARD_OUT,
+                TestLogEvent.STANDARD_ERROR
+            ),
+            events
+        )
+    }
+
+    @Test
+    fun `sets exception format`() {
+        assertEquals(TestExceptionFormat.FULL, project.test().testLogging.exceptionFormat)
     }
 }
