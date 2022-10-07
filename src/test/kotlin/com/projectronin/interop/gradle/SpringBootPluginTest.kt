@@ -1,10 +1,12 @@
 package com.projectronin.interop.gradle
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,7 +14,7 @@ import org.junit.jupiter.api.fail
 import org.junitpioneer.jupiter.SetEnvironmentVariable
 import java.net.URI
 
-class SpringBootTest {
+class SpringBootPluginTest {
     private lateinit var project: Project
 
     @BeforeEach
@@ -29,6 +31,12 @@ class SpringBootTest {
     @Test
     fun `includes spring boot plugin`() {
         assertNotNull(project.plugins.findPlugin("org.springframework.boot"))
+    }
+
+    @Test
+    fun `disables the jar task`() {
+        val jar = project.tasks.getByName("jar")
+        assertFalse(jar.enabled)
     }
 
     @Test
@@ -98,5 +106,13 @@ class SpringBootTest {
         } else {
             fail { "Non Maven publication" }
         }
+    }
+
+    @Test
+    fun `creates install alias task`() {
+        val install = project.tasks.getByName("install")
+        val dependencies = install.dependsOn
+        assertEquals(1, dependencies.size)
+        assertEquals(project.getTaskProvider<DefaultTask>("publishToMavenLocal"), dependencies.first())
     }
 }
