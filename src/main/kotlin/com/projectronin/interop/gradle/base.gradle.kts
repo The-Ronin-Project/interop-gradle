@@ -44,15 +44,15 @@ repositories {
     mavenLocal()
 }
 
+// Force ktlint to depend on clean to prevent some false positives from being alerted when we run ktlintFormat after a check has been performed.
+// This is actually kind of paranoid and may reduce some of gradle's caching around up-to-date tasks, but it will overall put builds in a more stable state.
+tasks.loadKtlintReporters.get().dependsOn(tasks.clean)
+
 gradle.taskGraph.whenReady {
     // If we have a KtlintFormat task, we will disable our ktlint checks.
     // We do this because they use a cached view of the code, so anything that has been formatted will also fail.
     // But we still want ktlintCheck to be able to run generally, if needed/desired.
     if (gradle.taskGraph.allTasks.any { it.name.contains("KtlintFormat") }) {
-        // We need to cleanup a few directories first in case any Ktlint data is currently there. If it is, we may end up flagging a failure that has already been fixed.
-        File("${project.buildDir}/reports/ktlint").deleteRecursively()
-        File("${project.buildDir}/intermediates/ktLint").deleteRecursively()
-
         gradle.taskGraph.allTasks.forEach {
             if (it.name.contains("KtlintCheck")) {
                 logger.info("Disabling $it due to presence of KtlintFormat")

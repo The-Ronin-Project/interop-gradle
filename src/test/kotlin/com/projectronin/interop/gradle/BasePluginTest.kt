@@ -1,9 +1,12 @@
 package com.projectronin.interop.gradle
 
+import gradle.kotlin.dsl.accessors._697f70aae3fabb853c9932ae6a77b8d1.clean
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.SourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -133,5 +136,13 @@ class BasePluginTest {
             project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         mainSourceSet.compileClasspath.assertHasJars("kotlin-logging-jvm", "slf4j-api")
         mainSourceSet.runtimeClasspath.assertHasJars("logback-classic")
+    }
+
+    @Test
+    fun `loadKtlintReporters depends on clean`() {
+        val task = project.tasks.named("loadKtlintReporters").get()
+        val dependencies = task.dependsOn.filterIsInstance<Provider<Task>>().map { it.get() }
+
+        assertTrue(dependencies.contains(project.tasks.clean.get()))
     }
 }
