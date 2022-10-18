@@ -87,6 +87,11 @@ tasks.withType<Test> {
     useJUnitPlatform()
 
     jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
+
+    testLogging {
+        events("passed", "skipped", "failed", "standardOut", "standardError")
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
 }
 
 jacoco {

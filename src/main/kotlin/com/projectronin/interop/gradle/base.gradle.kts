@@ -44,9 +44,15 @@ repositories {
     mavenLocal()
 }
 
-// Force ktlint to depend on clean to prevent some false positives from being alerted when we run ktlintFormat after a check has been performed.
-// This is actually kind of paranoid and may reduce some of gradle's caching around up-to-date tasks, but it will overall put builds in a more stable state.
-tasks.loadKtlintReporters.get().dependsOn(tasks.clean)
+val ktlintClean = tasks.register("ktlintClean") {
+    doFirst {
+        logger.lifecycle("Removing ktlint files from ${project.buildDir}")
+        // Clean up some directories
+        delete("${project.buildDir}/reports/ktlint", "${project.buildDir}/intermediates/ktLint")
+    }
+}
+
+tasks.loadKtlintReporters.get().dependsOn(ktlintClean)
 
 gradle.taskGraph.whenReady {
     // If we have a KtlintFormat task, we will disable our ktlint checks.
