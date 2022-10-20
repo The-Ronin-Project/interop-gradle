@@ -8,15 +8,12 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.SourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.File
 import java.net.URI
 
 class BasePluginTest {
@@ -25,13 +22,7 @@ class BasePluginTest {
     @BeforeEach
     fun setup() {
         project = getProject()
-        project.buildDir = File("test-build")
         project.pluginManager.apply("com.projectronin.interop.gradle.base")
-    }
-
-    @AfterEach
-    fun tearDown() {
-        File("${project.buildDir}").deleteRecursively()
     }
 
     @Test
@@ -147,30 +138,10 @@ class BasePluginTest {
     }
 
     @Test
-    fun `ktlintClean delets some ktlint directories`() {
-        File("${project.buildDir}/reports/ktlint").mkdirs()
-        val reportFile = File("${project.buildDir}/reports/ktlint/test.txt")
-        reportFile.writeText("Some basic data")
-
-        File("${project.buildDir}/intermediates/ktLint").mkdirs()
-        val intermediatesFile = File("${project.buildDir}/intermediates/ktLint/test.txt")
-        intermediatesFile.writeText("Some basic data")
-
-        assertTrue(File("${project.buildDir}/reports/ktlint").exists())
-        assertTrue(File("${project.buildDir}/intermediates/ktLint").exists())
-
-        val ktlintClean = project.tasks.named("ktlintClean").get()
-        ktlintClean.actions[0].execute(ktlintClean)
-
-        assertFalse(File("${project.buildDir}/reports/ktlint").exists())
-        assertFalse(File("${project.buildDir}/intermediates/ktLint").exists())
-    }
-
-    @Test
-    fun `loadKtlintReporters depends on ktlintClean`() {
+    fun `loadKtlintReporters depends on cleanLoadKtlintReporters`() {
         val task = project.tasks.named("loadKtlintReporters").get()
         val dependencies = task.dependsOn.filterIsInstance<Provider<Task>>().map { it.get() }
 
-        assertTrue(dependencies.contains(project.tasks.named("ktlintClean").get()))
+        assertTrue(dependencies.contains(project.tasks.named("cleanLoadKtlintReporters").get()))
     }
 }

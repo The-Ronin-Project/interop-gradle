@@ -44,15 +44,7 @@ repositories {
     mavenLocal()
 }
 
-val ktlintClean = tasks.register("ktlintClean") {
-    doFirst {
-        logger.lifecycle("Removing ktlint files from ${project.buildDir}")
-        // Clean up some directories
-        delete("${project.buildDir}/reports/ktlint", "${project.buildDir}/intermediates/ktLint")
-    }
-}
-
-tasks.loadKtlintReporters.get().dependsOn(ktlintClean)
+tasks.loadKtlintReporters.get().dependsOn(tasks.named("cleanLoadKtlintReporters"))
 
 gradle.taskGraph.whenReady {
     // If we have a KtlintFormat task, we will disable our ktlint checks.
