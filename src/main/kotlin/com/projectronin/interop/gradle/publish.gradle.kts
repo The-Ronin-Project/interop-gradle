@@ -1,7 +1,7 @@
 package com.projectronin.interop.gradle
 
 plugins {
-    id("com.projectronin.interop.gradle.base")
+    id("com.projectronin.interop.gradle.version")
     `maven-publish`
 }
 

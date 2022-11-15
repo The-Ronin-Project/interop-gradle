@@ -29,8 +29,8 @@ class PublishPluginTest {
     }
 
     @Test
-    fun `includes interop base plugin`() {
-        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.base"))
+    fun `includes interop version plugin`() {
+        assertNotNull(project.plugins.findPlugin("com.projectronin.interop.gradle.version"))
     }
 
     @Test
@@ -41,7 +41,7 @@ class PublishPluginTest {
     fun `sets maven repository to publishing for snapshot`() {
         val snapshotProject = getProject()
         // We apply this first so that it sets the version so that we can override it below
-        snapshotProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+        snapshotProject.pluginManager.apply("com.projectronin.interop.gradle.version")
         snapshotProject.version = "1.0.0-SNAPSHOT"
         snapshotProject.pluginManager.apply("com.projectronin.interop.gradle.publish")
 
@@ -67,7 +67,7 @@ class PublishPluginTest {
     fun `sets maven repository to publishing for non-snapshot`() {
         val nonSnapshotProject = getProject()
         // We apply this first so that it sets the version so that we can override it below
-        nonSnapshotProject.pluginManager.apply("com.projectronin.interop.gradle.base")
+        nonSnapshotProject.pluginManager.apply("com.projectronin.interop.gradle.version")
         nonSnapshotProject.version = "1.0.0"
         nonSnapshotProject.pluginManager.apply("com.projectronin.interop.gradle.publish")
 

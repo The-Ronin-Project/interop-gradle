@@ -1,7 +1,5 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._4162334096b86e34875e2238f5fb9aff.publishToMavenLocal
-
 plugins {
     id("com.projectronin.interop.gradle.spring")
     id("org.springframework.boot")
