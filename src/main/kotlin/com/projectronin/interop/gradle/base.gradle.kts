@@ -61,9 +61,9 @@ gradle.taskGraph.whenReady {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+    compilerOptions {
+        freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 
     dependsOn(tasks.ktlintFormat)
@@ -71,8 +71,8 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.7.22")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.22")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:3.0.4")

@@ -7,6 +7,7 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.SourceSet
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -114,9 +115,9 @@ class BasePluginTest {
     @Test
     fun `sets KotlinCompile options`() {
         val compile = project.getTask<KotlinCompile>("compileKotlin")
-        val options = compile.kotlinOptions
-        assertEquals(listOf("-Xjsr305=strict"), options.freeCompilerArgs)
-        assertEquals("11", options.jvmTarget)
+        val options = compile.compilerOptions
+        assertEquals(listOf("-Xjsr305=strict"), options.freeCompilerArgs.get())
+        assertEquals(JvmTarget.JVM_11, options.jvmTarget.get())
     }
 
     @Test
