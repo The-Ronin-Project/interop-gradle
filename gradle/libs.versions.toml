@@ -6,7 +6,7 @@ kotlin-gradle-plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10"
 kotlin-allopen = "org.jetbrains.kotlin:kotlin-allopen:1.8.10"
 junit-pioneer = "org.junit-pioneer:junit-pioneer:2.0.0"
 
-ktlint-gradle = "org.jlleitschuh.gradle:ktlint-gradle:11.2.0"
+ktlint-gradle = "org.jlleitschuh.gradle:ktlint-gradle:11.3.1"
 
 mockk = "io.mockk:mockk:1.13.4"
 
