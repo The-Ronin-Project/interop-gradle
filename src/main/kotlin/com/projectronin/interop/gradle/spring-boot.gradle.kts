@@ -6,11 +6,6 @@ plugins {
     `maven-publish`
 }
 
-// Ensure that the jar task does not run. We should only get the bootJar output.
-tasks.getByName<Jar>("jar") {
-    enabled = false
-}
-
 publishing {
     repositories {
         maven {

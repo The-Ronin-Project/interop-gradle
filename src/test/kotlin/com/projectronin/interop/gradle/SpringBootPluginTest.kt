@@ -6,7 +6,6 @@ import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.internal.publication.DefaultMavenPublication
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,12 +30,6 @@ class SpringBootPluginTest {
     @Test
     fun `includes spring boot plugin`() {
         assertNotNull(project.plugins.findPlugin("org.springframework.boot"))
-    }
-
-    @Test
-    fun `disables the jar task`() {
-        val jar = project.tasks.getByName("jar")
-        assertFalse(jar.enabled)
     }
 
     @Test

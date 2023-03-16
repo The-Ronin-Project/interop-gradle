@@ -1,10 +1,10 @@
 package com.projectronin.interop.gradle
 
+import gradle.kotlin.dsl.accessors._6a32400db1764bf085cb3cf00218e178.testing
 import org.gradle.api.Project
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.unbrokendome.gradle.plugins.testsets.dsl.TestSetContainer
 
 class IntegrationPluginTest {
     private lateinit var project: Project
@@ -22,12 +22,12 @@ class IntegrationPluginTest {
 
     @Test
     fun `includes test sets plugin`() {
-        assertNotNull(project.plugins.findPlugin("org.unbroken-dome.test-sets"))
+        assertNotNull(project.plugins.findPlugin("jvm-test-suite"))
     }
 
     @Test
     fun `includes it testSets`() {
-        val testSets = project.getExtension<TestSetContainer>("testSets")
-        assertNotNull(testSets.getByName("it"))
+        assertNotNull(project.tasks.getByName("it"))
+        assertNotNull(project.testing.suites.findByName("it"))
     }
 }

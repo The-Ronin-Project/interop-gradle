@@ -65,7 +65,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.ktlint.gradle)
     implementation(libs.axion.release.plugin)
-    implementation(libs.gradle.testsets.plugin)
     implementation(libs.releases.hub.gradle.plugin)
     implementation(libs.spring.boot.gradle.plugin)
 
