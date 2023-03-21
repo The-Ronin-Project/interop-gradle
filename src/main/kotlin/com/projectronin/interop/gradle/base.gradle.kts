@@ -76,6 +76,6 @@ dependencies {
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:3.0.5")
-    implementation("org.slf4j:slf4j-api:2.0.6")
+    implementation("org.slf4j:slf4j-api:2.0.7")
     runtimeOnly("ch.qos.logback:logback-classic:1.4.6")
 }
