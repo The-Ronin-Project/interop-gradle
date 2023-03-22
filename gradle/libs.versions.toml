@@ -1,5 +1,5 @@
 [libraries]
-axion-release-plugin = "pl.allegro.tech.build:axion-release-plugin:1.14.4"
+axion-release-plugin = "pl.allegro.tech.build:axion-release-plugin:1.15.0"
 junit-jupiter = "org.junit.jupiter:junit-jupiter:5.9.2"
 kotlin-gradle-plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10"
 kotlin-allopen = "org.jetbrains.kotlin:kotlin-allopen:1.8.10"
