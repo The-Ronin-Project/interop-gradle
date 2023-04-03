@@ -1,7 +1,7 @@
 package com.projectronin.interop.gradle
 
-import gradle.kotlin.dsl.accessors._6a32400db1764bf085cb3cf00218e178.testing
 import org.gradle.api.Project
+import org.gradle.testing.base.TestingExtension
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -28,6 +28,8 @@ class IntegrationPluginTest {
     @Test
     fun `includes it testSets`() {
         assertNotNull(project.tasks.getByName("it"))
-        assertNotNull(project.testing.suites.findByName("it"))
+
+        val testing = project.extensions.getByName("testing") as TestingExtension
+        assertNotNull(testing.suites.findByName("it"))
     }
 }
