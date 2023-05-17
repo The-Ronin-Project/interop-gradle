@@ -10,7 +10,7 @@ ktlint-gradle = "org.jlleitschuh.gradle:ktlint-gradle:11.3.2"
 mockk = "io.mockk:mockk:1.13.5"
 
 releases-hub-gradle-plugin = "com.dipien:releases-hub-gradle-plugin:4.0.0"
-sshd-core = "org.apache.sshd:sshd-core:2.9.2"
+sshd-core = "org.apache.sshd:sshd-core:2.10.0"
 spring-boot-gradle-plugin = "org.springframework.boot:spring-boot-gradle-plugin:2.7.5"
 
 [bundles]
