@@ -9,7 +9,7 @@ rootProject.apply {
     scmVersion {
         tag {
             initialVersion { _, _ -> "1.0.0" }
-            prefix.set("")
+            prefix.set("v")
         }
         versionCreator { versionFromTag, position ->
             val supportedHeads = setOf("HEAD", "master", "main")
