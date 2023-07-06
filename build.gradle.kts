@@ -36,7 +36,7 @@ scmVersion {
         prefix.set("")
     }
     versionCreator { versionFromTag, position ->
-        if (position.branch != "master" && position.branch != "HEAD") {
+        if (position.branch != "main" && position.branch != "HEAD") {
             val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
             val match = jiraBranchRegex.matchEntire(position.branch)
 
