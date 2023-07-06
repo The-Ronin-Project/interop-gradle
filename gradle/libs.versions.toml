@@ -1,37 +1,40 @@
 [versions]
 axion = "1.15.3"
 benmanes-versions = "0.47.0"
-kotlin = "1.8.22"
 junit-jupiter = "5.9.3"
-junit-pioneer  = "2.0.1"
-ktlint = "11.4.0"
+junit-pioneer = "2.0.1"
+kotlin = "1.8.22"
+ktlint = "11.5.0"
 mockk = "1.13.5"
 releaseshub = "4.0.0"
-sshd-core = "2.10.0"
 # @pin until can move to JDK 17
 spring-boot = "2.7.13"
+sshd-core = "2.10.0"
 vcu = "0.8.0"
 
 [libraries]
 axion-release-plugin = { module = "pl.allegro.tech.build:axion-release-plugin", version.ref = "axion" }
-benmanes-versions-gradle-plugin = {module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "benmanes-versions"}
-junit-jupiter = {module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter"}
-junit-pioneer = {module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer"}
-kotlin-gradle-plugin = {module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin"}
-kotlin-allopen = {module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin"}
+benmanes-versions-gradle-plugin = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "benmanes-versions" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-pioneer = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
+kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ktlint-gradle = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 releases-hub-gradle-plugin = { module = "com.dipien:releases-hub-gradle-plugin", version.ref = "releaseshub" }
-sshd-core = { module = "org.apache.sshd:sshd-core", version.ref = "sshd-core" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
-vcu-gradle-plugin = {module = "nl.littlerobots.vcu:plugin", version.ref = "vcu"}
+sshd-core = { module = "org.apache.sshd:sshd-core", version.ref = "sshd-core" }
+vcu-gradle-plugin = { module = "nl.littlerobots.vcu:plugin", version.ref = "vcu" }
+
+[bundles]
+kotlin = [
+    "kotlin-allopen",
+    "kotlin-gradle-plugin",
+]
 
 [plugins]
 axion = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion" }
+benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 releaseshub = { id = "com.dipien.releaseshub.gradle.plugin", version.ref = "releaseshub" }
-benmanes-versions = {id = "com.github.ben-manes.versions", version.ref = "benmanes-versions"}
-vcu = {id = "nl.littlerobots.version-catalog-update", version.ref = "vcu"}
-
-[bundles]
-kotlin = ["kotlin-gradle-plugin", "kotlin-allopen"]
+vcu = { id = "nl.littlerobots.version-catalog-update", version.ref = "vcu" }
