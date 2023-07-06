@@ -10,3 +10,4 @@ jobs:
     uses: projectronin/github/.github/workflows/version_catalog_update.yaml@version_catalog_update/v1
     with:
       assignees: "arssycro"
+    secrets: inherit
