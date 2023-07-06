@@ -1,15 +1,18 @@
+
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import pl.allegro.tech.build.axion.release.domain.properties.TagProperties
 
 plugins {
     kotlin("jvm")
     `kotlin-dsl`
     `maven-publish`
     jacoco
-    id("org.jlleitschuh.gradle.ktlint")
-    id("pl.allegro.tech.build.axion-release")
-    id("com.dipien.releaseshub.gradle.plugin")
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.axion)
+    alias(libs.plugins.releaseshub)
+    alias(libs.plugins.benmanes.versions)
+    alias(libs.plugins.vcu)
 }
 
 // Java/Kotlin versioning
@@ -19,7 +22,7 @@ java {
 
 tasks.withType<KotlinCompile> {
     compilerOptions {
-        freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        freeCompilerArgs.addAll("-Xjsr305=strict")
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 
@@ -29,7 +32,7 @@ tasks.withType<KotlinCompile> {
 // Versioning/release
 scmVersion {
     tag {
-        initialVersion(TagProperties.InitialVersionSupplier { _, _ -> "1.0.0" })
+        initialVersion { _, _ -> "1.0.0" }
         prefix.set("")
     }
     versionCreator { versionFromTag, position ->
@@ -67,6 +70,8 @@ dependencies {
     implementation(libs.axion.release.plugin)
     implementation(libs.releases.hub.gradle.plugin)
     implementation(libs.spring.boot.gradle.plugin)
+    implementation(libs.benmanes.versions.gradle.plugin)
+    implementation(libs.vcu.gradle.plugin)
 
     testImplementation(libs.junit.jupiter)
     // Allows us to change environment variables
@@ -155,4 +160,20 @@ publishing {
 
 tasks.register("install") {
     dependsOn(tasks.publishToMavenLocal)
+}
+
+tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
+    revision = "release"
+    gradleReleaseChannel = "current"
+
+    fun isNonStable(version: String): Boolean {
+        val stableKeyword = listOf("RELEASE", "FINAL", "GA", "JRE").any { version.uppercase().contains(it) }
+        val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+        val isStable = stableKeyword || regex.matches(version)
+        return isStable.not()
+    }
+
+    rejectVersionIf {
+        isNonStable(candidate.version)
+    }
 }

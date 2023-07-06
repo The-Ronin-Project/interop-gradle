@@ -9,7 +9,7 @@ plugins {
     id("com.dipien.releaseshub.gradle.plugin")
 }
 
-java {
+configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.VERSION_11
 
     // Generate sources and javadoc JARs. These will automatically be published in publishing is active.
@@ -62,7 +62,7 @@ gradle.taskGraph.whenReady {
 
 tasks.withType<KotlinCompile> {
     compilerOptions {
-        freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        freeCompilerArgs.addAll("-Xjsr305=strict")
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 
