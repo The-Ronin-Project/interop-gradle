@@ -1,4 +1,3 @@
-
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.gradle.kotlin.dsl.support.serviceOf
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -10,10 +9,13 @@ plugins {
     jacoco
     alias(libs.plugins.ktlint)
     alias(libs.plugins.axion)
-    alias(libs.plugins.releaseshub)
     alias(libs.plugins.benmanes.versions)
     alias(libs.plugins.vcu)
+    id("com.projectronin.interop.gradle.dependency")
 }
+
+// Force our precompiled plugin updates to run when he update version catalogs to ensure they're updated before PR creation.
+tasks.getByName("versionCatalogUpdate").dependsOn("precompiledPluginUpdate")
 
 // Java/Kotlin versioning
 java {
@@ -68,7 +70,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.ktlint.gradle)
     implementation(libs.axion.release.plugin)
-    implementation(libs.releases.hub.gradle.plugin)
     implementation(libs.spring.boot.gradle.plugin)
     implementation(libs.benmanes.versions.gradle.plugin)
     implementation(libs.vcu.gradle.plugin)
@@ -131,13 +132,6 @@ ktlint {
         // This solution comes from https://github.com/JLLeitschuh/ktlint-gradle/issues/222#issuecomment-480758375
         exclude { projectDir.toURI().relativize(it.file.toURI()).path.contains("/generated-sources/") }
     }
-}
-
-// Release Hubs
-releasesHub {
-    // We want to inspect all the .kts pre-compiled scripts we're using as well.
-    // Note that this will still include our base files.
-    dependenciesPaths = File("src/main/kotlin").walk().filter { it.name.endsWith(".kts") }.map { it.path }.toList()
 }
 
 // Publishing

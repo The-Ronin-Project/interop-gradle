@@ -37,11 +37,6 @@ class BasePluginTest {
     }
 
     @Test
-    fun `includes releases hub plugin`() {
-        assertNotNull(project.plugins.findPlugin("com.dipien.releaseshub.gradle.plugin"))
-    }
-
-    @Test
     fun `sets java source compatability to 17`() {
         assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }

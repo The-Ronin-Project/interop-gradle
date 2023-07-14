@@ -21,6 +21,7 @@ kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref =
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 ktlint-gradle = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+# @keep This is used by the buildSrc
 releases-hub-gradle-plugin = { module = "com.dipien:releases-hub-gradle-plugin", version.ref = "releaseshub" }
 spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
 sshd-core = { module = "org.apache.sshd:sshd-core", version.ref = "sshd-core" }
@@ -36,5 +37,4 @@ kotlin = [
 axion = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion" }
 benmanes-versions = { id = "com.github.ben-manes.versions", version.ref = "benmanes-versions" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-releaseshub = { id = "com.dipien.releaseshub.gradle.plugin", version.ref = "releaseshub" }
 vcu = { id = "nl.littlerobots.version-catalog-update", version.ref = "vcu" }

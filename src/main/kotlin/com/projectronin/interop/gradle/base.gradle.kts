@@ -6,7 +6,6 @@ plugins {
     kotlin("jvm")
 
     id("org.jlleitschuh.gradle.ktlint")
-    id("com.dipien.releaseshub.gradle.plugin")
 }
 
 configure<JavaPluginExtension> {
