@@ -70,8 +70,8 @@ tasks.withType<KotlinCompile> {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
 
     // Logging
     implementation("io.github.microutils:kotlin-logging:3.0.5")
