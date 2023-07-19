@@ -10,7 +10,7 @@ releaseshub = "4.0.0"
 # @pin until can move to JDK 17
 spring-boot = "2.7.13"
 sshd-core = "2.10.0"
-vcu = "0.8.0"
+vcu = "0.8.1"
 
 [libraries]
 axion-release-plugin = { module = "pl.allegro.tech.build:axion-release-plugin", version.ref = "axion" }
