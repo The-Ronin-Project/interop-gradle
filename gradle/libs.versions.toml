@@ -5,7 +5,7 @@ junit-jupiter = "5.10.0"
 junit-pioneer = "2.1.0"
 kotlin = "1.8.22"
 ktlint = "11.6.0"
-mockk = "1.13.7"
+mockk = "1.13.8"
 releaseshub = "4.0.0"
 # @pin until can move to JDK 17
 spring-boot = "2.7.13"
