@@ -1,5 +1,5 @@
 [versions]
-axion = "1.15.4"
+axion = "1.15.5"
 benmanes-versions = "0.48.0"
 junit-jupiter = "5.10.0"
 junit-pioneer = "2.1.0"
