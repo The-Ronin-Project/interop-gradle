@@ -27,7 +27,8 @@ fun FileCollection.assertNoJarsStartingWith(vararg jarPrefixes: String) {
     }
 }
 
-fun getProject() = ProjectBuilder.builder().withProjectDir(File(System.getProperty("user.dir"))).build()
+fun getProject(name: String = "interop-gradle-test") =
+    ProjectBuilder.builder().withName(name).withProjectDir(File(System.getProperty("user.dir"))).build()
 
 inline fun <reified T> Project.getExtension(name: String): T = this.extensions.getByName(name) as T
 

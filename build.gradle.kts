@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.axion)
     alias(libs.plugins.benmanes.versions)
     alias(libs.plugins.vcu)
+    alias(libs.plugins.sonarqube)
     id("com.projectronin.interop.gradle.dependency")
 }
 
@@ -73,6 +74,7 @@ dependencies {
     implementation(libs.spring.boot.gradle.plugin)
     implementation(libs.benmanes.versions.gradle.plugin)
     implementation(libs.vcu.gradle.plugin)
+    implementation(libs.sonarqube.gradle.plugin)
 
     testImplementation(libs.junit.jupiter)
     // Allows us to change environment variables
@@ -169,5 +171,12 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
 
     rejectVersionIf {
         isNonStable(candidate.version)
+    }
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "interop-gradle")
+        property("sonar.newCode.referenceBranch", "main")
     }
 }
