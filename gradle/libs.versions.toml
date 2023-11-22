@@ -1,8 +1,8 @@
 [versions]
 axion = "1.15.5"
-benmanes-versions = "0.49.0"
+benmanes-versions = "0.50.0"
 junit-jupiter = "5.10.1"
-junit-pioneer = "2.1.0"
+junit-pioneer = "2.2.0"
 kotlin = "1.8.22"
 ktlint = "11.6.1"
 mockk = "1.13.8"
