@@ -33,8 +33,10 @@ fun getProject(name: String = "interop-gradle-test") =
 inline fun <reified T> Project.getExtension(name: String): T = this.extensions.getByName(name) as T
 
 inline fun <reified T : Task> Project.getTaskProvider(name: String): TaskProvider<T> = this.tasks.named<T>(name)
+
 inline fun <reified T : Task> Project.getTask(name: String): T = getTaskProvider<T>(name).get()
 
 // Convenience calls that are usually available within Gradle code, but are part of some weird accessors that change over time
 fun Project.sourceSets() = getExtension<SourceSetContainer>("sourceSets")
+
 fun Project.test() = getTask<Test>("test")

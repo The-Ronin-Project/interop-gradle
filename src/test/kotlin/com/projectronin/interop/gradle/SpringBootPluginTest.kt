@@ -35,7 +35,7 @@ class SpringBootPluginTest {
     @Test
     @SetEnvironmentVariable.SetEnvironmentVariables(
         SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token"),
     )
     fun `sets maven repository to publishing for snapshot`() {
         val snapshotProject = getProject()
@@ -61,7 +61,7 @@ class SpringBootPluginTest {
     @Test
     @SetEnvironmentVariable.SetEnvironmentVariables(
         SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token"),
     )
     fun `sets maven repository to publishing for non-snapshot`() {
         val nonSnapshotProject = getProject()

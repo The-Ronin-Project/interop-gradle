@@ -16,10 +16,11 @@ rootProject.apply {
             if (!supportedHeads.contains(position.branch)) {
                 val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
                 val match = jiraBranchRegex.matchEntire(position.branch)
-                val branchExtension = match?.let {
-                    val (project, number, _) = it.destructured
-                    "$project$number"
-                } ?: position.branch
+                val branchExtension =
+                    match?.let {
+                        val (project, number, _) = it.destructured
+                        "$project$number"
+                    } ?: position.branch
 
                 "$versionFromTag-$branchExtension"
             } else {

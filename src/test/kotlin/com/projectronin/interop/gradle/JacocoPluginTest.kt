@@ -63,7 +63,7 @@ class JacocoPluginTest {
     fun `runs jacoco after tests`() {
         val test = project.test()
         assertTrue(
-            test.finalizedBy.getDependencies(project.getTask<JacocoReport>("jacocoTestReport")).size == 1
+            test.finalizedBy.getDependencies(project.getTask<JacocoReport>("jacocoTestReport")).size == 1,
         )
     }
 }

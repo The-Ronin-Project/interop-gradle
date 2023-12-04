@@ -36,7 +36,7 @@ class PublishPluginTest {
     @Test
     @SetEnvironmentVariables(
         SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token"),
     )
     fun `sets maven repository to publishing for snapshot`() {
         val snapshotProject = getProject()
@@ -62,7 +62,7 @@ class PublishPluginTest {
     @Test
     @SetEnvironmentVariables(
         SetEnvironmentVariable(key = "NEXUS_USER", value = "test_user"),
-        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token")
+        SetEnvironmentVariable(key = "NEXUS_TOKEN", value = "token"),
     )
     fun `sets maven repository to publishing for non-snapshot`() {
         val nonSnapshotProject = getProject()

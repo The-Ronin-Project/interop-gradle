@@ -41,7 +41,10 @@ class BasePluginTest {
         assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }
 
-    private fun getMavenRepository(project: Project, url: String): MavenArtifactRepository? =
+    private fun getMavenRepository(
+        project: Project,
+        url: String,
+    ): MavenArtifactRepository? =
         project.repositories.find { it is MavenArtifactRepository && it.url == URI.create(url) } as? MavenArtifactRepository
 
     @Test
@@ -121,7 +124,7 @@ class BasePluginTest {
             project.sourceSets().getByName(SourceSet.MAIN_SOURCE_SET_NAME)
         mainSourceSet.compileClasspath.assertHasJars(
             "kotlin-reflect",
-            "kotlin-stdlib-jdk8"
+            "kotlin-stdlib-jdk8",
         )
     }
 

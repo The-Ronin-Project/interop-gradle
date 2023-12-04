@@ -34,7 +34,7 @@ class JunitPluginTest {
     @Test
     fun `sets JUnit Platform`() {
         assertTrue(
-            project.test().testFramework is JUnitPlatformTestFramework
+            project.test().testFramework is JUnitPlatformTestFramework,
         )
     }
 
@@ -47,9 +47,9 @@ class JunitPluginTest {
                 TestLogEvent.SKIPPED,
                 TestLogEvent.FAILED,
                 TestLogEvent.STANDARD_OUT,
-                TestLogEvent.STANDARD_ERROR
+                TestLogEvent.STANDARD_ERROR,
             ),
-            events
+            events,
         )
     }
 

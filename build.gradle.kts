@@ -43,10 +43,11 @@ scmVersion {
             val jiraBranchRegex = Regex("(\\w+)-(\\d+)-(.+)")
             val match = jiraBranchRegex.matchEntire(position.branch)
 
-            val branchExtension = match?.let {
-                val (project, number, _) = it.destructured
-                "$project$number"
-            } ?: position.branch
+            val branchExtension =
+                match?.let {
+                    val (project, number, _) = it.destructured
+                    "$project$number"
+                } ?: position.branch
 
             "$versionFromTag-$branchExtension"
         } else {
@@ -85,7 +86,11 @@ dependencies {
 
     // See https://github.com/gradle/gradle/issues/16774#issuecomment-853407822
     testRuntimeOnly(
-        files(serviceOf<org.gradle.api.internal.classpath.ModuleRegistry>().getModule("gradle-tooling-api-builders").classpath.asFiles.first())
+        files(
+            serviceOf<org.gradle.api.internal.classpath.ModuleRegistry>().getModule(
+                "gradle-tooling-api-builders",
+            ).classpath.asFiles.first(),
+        ),
     )
 }
 
@@ -145,11 +150,12 @@ publishing {
                 username = System.getenv("NEXUS_USER")
                 password = System.getenv("NEXUS_TOKEN")
             }
-            url = if (project.version.toString().endsWith("SNAPSHOT")) {
-                uri("https://repo.devops.projectronin.io/repository/maven-snapshots/")
-            } else {
-                uri("https://repo.devops.projectronin.io/repository/maven-releases/")
-            }
+            url =
+                if (project.version.toString().endsWith("SNAPSHOT")) {
+                    uri("https://repo.devops.projectronin.io/repository/maven-snapshots/")
+                } else {
+                    uri("https://repo.devops.projectronin.io/repository/maven-releases/")
+                }
         }
     }
 }
