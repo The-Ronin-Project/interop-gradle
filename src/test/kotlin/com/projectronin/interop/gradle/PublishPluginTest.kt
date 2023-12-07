@@ -92,7 +92,7 @@ class PublishPluginTest {
 
         val library = publications.getByName("library")
         if (library is DefaultMavenPublication) {
-            assertEquals(project.components.getByName("java"), library.component)
+            assertEquals(project.components.getByName("java"), library.component.get())
         } else {
             fail { "Non Maven publication" }
         }

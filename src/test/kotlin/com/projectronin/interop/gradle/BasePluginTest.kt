@@ -37,8 +37,8 @@ class BasePluginTest {
     }
 
     @Test
-    fun `sets java source compatability to 17`() {
-        assertEquals(JavaVersion.VERSION_11, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
+    fun `sets java source compatibility`() {
+        assertEquals(JavaVersion.VERSION_17, project.getExtension<JavaPluginExtension>("java").sourceCompatibility)
     }
 
     private fun getMavenRepository(
@@ -115,7 +115,7 @@ class BasePluginTest {
         val compile = project.getTask<KotlinCompile>("compileKotlin")
         val options = compile.compilerOptions
         assertEquals(listOf("-Xjsr305=strict"), options.freeCompilerArgs.get())
-        assertEquals(JvmTarget.JVM_11, options.jvmTarget.get())
+        assertEquals(JvmTarget.JVM_17, options.jvmTarget.get())
     }
 
     @Test

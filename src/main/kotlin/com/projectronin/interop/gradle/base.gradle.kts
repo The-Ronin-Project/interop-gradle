@@ -9,7 +9,7 @@ plugins {
 }
 
 configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
 
     // Generate sources and javadoc JARs. These will automatically be published in publishing is active.
     withSourcesJar()
@@ -62,7 +62,7 @@ gradle.taskGraph.whenReady {
 tasks.withType<KotlinCompile> {
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
     }
 
     dependsOn(tasks.ktlintFormat)

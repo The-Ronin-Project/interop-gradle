@@ -1,5 +1,5 @@
 [versions]
-axion = "1.16.0"
+axion = "1.16.1"
 benmanes-versions = "0.50.0"
 junit-jupiter = "5.10.1"
 junit-pioneer = "2.2.0"
@@ -8,8 +8,7 @@ ktlint = "12.0.2"
 mockk = "1.13.8"
 releaseshub = "4.0.0"
 sonarqube = "4.4.1.3373"
-# @pin until can move to JDK 17
-spring-boot = "2.7.13"
+spring-boot = "3.2.0"
 sshd-core = "2.11.0"
 vcu = "0.8.1"
 
