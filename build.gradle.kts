@@ -183,6 +183,5 @@ tasks.named<DependencyUpdatesTask>("dependencyUpdates").configure {
 sonar {
     properties {
         property("sonar.projectKey", "interop-gradle")
-        property("sonar.newCode.referenceBranch", "main")
     }
 }

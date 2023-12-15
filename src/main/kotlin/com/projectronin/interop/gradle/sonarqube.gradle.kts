@@ -8,7 +8,6 @@ plugins {
 sonar {
     properties {
         property("sonar.projectKey", project.rootProject.name)
-        property("sonar.newCode.referenceBranch", "main")
     }
 }
 

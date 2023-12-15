@@ -3,6 +3,7 @@ package com.projectronin.interop.gradle
 import org.gradle.api.Project
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.sonarqube.gradle.ActionBroadcast
@@ -39,6 +40,8 @@ class SonarqubePluginTest {
         actionBroadcast.execute(properties)
 
         assertEquals("sonarqube-test", properties.properties["sonar.projectKey"])
-        assertEquals("main", properties.properties["sonar.newCode.referenceBranch"])
+
+        // We specifically do not want this set.
+        assertNull(properties.properties["sonar.newCode.referenceBranch"])
     }
 }
