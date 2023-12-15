@@ -4,6 +4,8 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+import org.gradle.api.internal.artifacts.ivyservice.resolutionstrategy.DefaultCachePolicy
+import org.gradle.api.internal.artifacts.ivyservice.resolutionstrategy.DefaultResolutionStrategy
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.SourceSet
@@ -142,5 +144,18 @@ class BasePluginTest {
         val dependencies = task.dependsOn.filterIsInstance<Provider<Task>>().map { it.get() }
 
         assertTrue(dependencies.contains(project.tasks.named("cleanLoadKtlintReporters").get()))
+    }
+
+    @Test
+    fun `disables changing module caching`() {
+        val property = DefaultCachePolicy::class.java.getDeclaredField("keepChangingModulesFor")
+        property.isAccessible = true
+
+        project.configurations.forEach { configuration ->
+            val strategy = configuration.resolutionStrategy as DefaultResolutionStrategy
+
+            val changingModulesTime = property.get(strategy.cachePolicy) as Long
+            assertEquals(0L, changingModulesTime)
+        }
     }
 }

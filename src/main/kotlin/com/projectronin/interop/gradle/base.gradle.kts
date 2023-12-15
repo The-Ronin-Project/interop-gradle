@@ -78,3 +78,8 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.9")
     runtimeOnly("ch.qos.logback:logback-classic:1.4.14")
 }
+
+configurations.all {
+    // Disables the cache for "changing modules", most notably snapshots
+    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+}
