@@ -8,8 +8,8 @@ ktlint = "12.1.0"
 mockk = "1.13.9"
 releaseshub = "4.0.0"
 sonarqube = "4.4.1.3373"
-spring-boot = "3.2.1"
-sshd-core = "2.11.0"
+spring-boot = "3.2.2"
+sshd-core = "2.12.0"
 vcu = "0.8.3"
 
 [libraries]
