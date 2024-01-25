@@ -1,6 +1,6 @@
 [versions]
 axion = "1.16.1"
-benmanes-versions = "0.50.0"
+benmanes-versions = "0.51.0"
 junit-jupiter = "5.10.1"
 junit-pioneer = "2.2.0"
 kotlin = "1.8.22"
