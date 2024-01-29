@@ -3,14 +3,14 @@ axion = "1.16.1"
 benmanes-versions = "0.51.0"
 junit-jupiter = "5.10.1"
 junit-pioneer = "2.2.0"
-kotlin = "1.8.22"
+kotlin = "1.9.22"
 ktlint = "12.1.0"
 mockk = "1.13.9"
 releaseshub = "4.0.0"
 sonarqube = "4.4.1.3373"
 spring-boot = "3.2.2"
 sshd-core = "2.12.0"
-vcu = "0.8.3"
+vcu = "0.8.4"
 
 [libraries]
 axion-release-plugin = { module = "pl.allegro.tech.build:axion-release-plugin", version.ref = "axion" }
