@@ -1,5 +1,5 @@
 [versions]
-axion = "1.16.1"
+axion = "1.17.0"
 benmanes-versions = "0.51.0"
 junit-jupiter = "5.10.2"
 junit-pioneer = "2.2.0"
@@ -9,7 +9,7 @@ mockk = "1.13.9"
 releaseshub = "4.0.0"
 sonarqube = "4.4.1.3373"
 spring-boot = "3.2.2"
-sshd-core = "2.12.0"
+sshd-core = "2.12.1"
 vcu = "0.8.4"
 
 [libraries]

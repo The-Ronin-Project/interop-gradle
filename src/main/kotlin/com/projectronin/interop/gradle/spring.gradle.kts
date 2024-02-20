@@ -9,6 +9,6 @@ plugins {
 
 dependencies {
     // This dependency can not go to Spring 6 yet.
-    implementation(platform("org.springframework:spring-framework-bom:6.1.3"))
+    implementation(platform("org.springframework:spring-framework-bom:6.1.4"))
     implementation("org.springframework:spring-context")
 }
