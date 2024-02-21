@@ -42,7 +42,7 @@ class DockerIntegrationPluginTest {
         assertTrue(bootJar.mustRunAfter.getDependencies(bootJar).contains(project.tasks.named("clean").get()))
     }
 
-    // We should have a docker compose build test here, ideally. But we can't test the way it sets up Actions to verify.
+    // We should have a docker build test here, ideally. But we can't test the way it sets up Actions to verify.
 
     @Test
     fun `it depends on itSetup`() {

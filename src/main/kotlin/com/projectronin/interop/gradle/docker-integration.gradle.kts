@@ -14,7 +14,7 @@ var itSetup =
 
         doLast {
             exec {
-                commandLine("docker compose build --no-cache".split(" "))
+                commandLine("docker build --no-cache -t ${project.name}:local .".split(" "))
             }
         }
     }
