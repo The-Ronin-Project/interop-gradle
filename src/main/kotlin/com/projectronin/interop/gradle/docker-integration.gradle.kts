@@ -14,7 +14,7 @@ var itSetup =
 
         doLast {
             exec {
-                commandLine("docker build --no-cache -t ${project.name}:local ./".split(" "))
+                commandLine("docker buildx build --no-cache -t ${project.name}:local ./".split(" "))
             }
         }
     }
