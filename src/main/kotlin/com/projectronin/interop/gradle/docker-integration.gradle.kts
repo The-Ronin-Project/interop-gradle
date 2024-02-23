@@ -5,18 +5,41 @@ plugins {
     id("com.projectronin.interop.gradle.spring-boot")
 }
 
-var itSetup =
+val itSetup =
     tasks.create("itSetup") {
-        dependsOn(tasks.clean)
-        dependsOn(tasks.bootJar)
+        val clean = tasks.named("clean")
+        val bootJar = tasks.named("bootJar")
 
-        tasks.bootJar.get().mustRunAfter(tasks.clean)
+        dependsOn(clean)
+        dependsOn(bootJar)
+
+        bootJar.get().mustRunAfter(clean)
+    }
+
+val runDocker =
+    tasks.create("runDocker") {
+        dependsOn(itSetup)
 
         doLast {
             exec {
-                commandLine("docker buildx build --no-cache -t ${project.name}:local ./".split(" "))
+                workingDir = file("./src/it/resources")
+                commandLine("docker compose -f docker-compose-it.yaml up -d --wait --wait-timeout 600".split(" "))
             }
         }
     }
 
-tasks.named("it").get().dependsOn(itSetup)
+val stopDocker =
+    tasks.create("stopDocker") {
+        doLast {
+            exec {
+                workingDir = file("./src/it/resources")
+                commandLine("docker compose -f docker-compose-it.yaml down".split(" "))
+            }
+        }
+    }
+
+tasks.named("it").get().apply {
+    dependsOn(runDocker)
+
+    finalizedBy(stopDocker)
+}

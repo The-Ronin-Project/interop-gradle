@@ -3,6 +3,7 @@ package com.projectronin.interop.gradle
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.provider.Provider
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -42,11 +43,23 @@ class DockerIntegrationPluginTest {
         assertTrue(bootJar.mustRunAfter.getDependencies(bootJar).contains(project.tasks.named("clean").get()))
     }
 
-    // We should have a docker build test here, ideally. But we can't test the way it sets up Actions to verify.
+    // We should have a docker compose tests here, ideally. But we can't test the way it sets up Actions to verify.
+
+    @Test
+    fun `runDocker depends on itSetup`() {
+        val task = project.tasks.named("runDocker").get()
+        assertTrue(task.dependsOn.contains(project.tasks.named("itSetup").get()))
+    }
 
     @Test
     fun `it depends on itSetup`() {
         val task = project.tasks.named("it").get()
-        assertTrue(task.dependsOn.contains(project.tasks.named("itSetup").get()))
+        assertTrue(task.dependsOn.contains(project.tasks.named("runDocker").get()))
+    }
+
+    @Test
+    fun `it finalized by stopDocker`() {
+        val task = project.tasks.named("it").get()
+        assertEquals("stopDocker", task.finalizedBy.getDependencies(project.getTask("it")).single().name)
     }
 }
