@@ -23,7 +23,7 @@ val runDocker =
         doLast {
             exec {
                 workingDir = file("./src/it/resources")
-                commandLine("docker compose -f docker-compose-it.yaml up -d --wait --wait-timeout 600".split(" "))
+                commandLine("docker compose -f docker-compose-it.yaml up -d --build --wait --wait-timeout 600".split(" "))
             }
         }
     }
